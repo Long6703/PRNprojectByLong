@@ -1,0 +1,274 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @using LongShop3.Services.IServices;
+    @using LongShop3.Models;
+    @inject ICateServices cate;
+    @inject IBrandService brands;
+    var listcate = cate.GetAllCate();
+    var listbrand = brands.GetBrands();
+    @model List<ProductWithImageColor>
+
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Long Shop - Product Listing Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="~/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/favicon.ico">
+
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/templatemo.css">
+    <link rel="stylesheet" href="~/css/custom.css">
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="~/css/fontawesome.min.css">
+    <!--
+
+    TemplateMo 559 Zay Shop
+
+    https://templatemo.com/tm-559-zay-shop
+
+
+    -->
+    <style>
+        .price-slider {
+            margin: 20px;
+        }
+
+            .price-slider input[type=range] {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .price-slider span {
+                display: inline-block;
+                margin-left: -10px;
+            }
+    </style>
+</head>
+
+<body>
+    @Html.Partial("~/Views/Navbar.cshtml")
+    <!-- Modal -->
+
+
+
+    <!-- Start Content -->
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-3">
+                <form action="shop" method="get">
+                    <h1 style="color:#59ab6e" class="h2 pb-4">Categories</h1>
+                    <ul class="list-unstyled templatemo-accordion">
+                        @foreach (var cate in listcate)
+                        {
+                            <li class="pb-3">
+                                <h5><input type="radio" name="CategoryId" value="@cate.CategoryId" @(ViewBag.CategoryId == cate.CategoryId ? "checked" : "") /> @cate.CategoryName</h5>
+                            </li>
+                        }
+                    </ul>
+                    <h1 style="color:#59ab6e" class="h2 pb-4">Brands</h1>
+                    <ul class="list-unstyled templatemo-accordion">
+                        @foreach (var brand in listbrand)
+                        {
+                            <li class="pb-3">
+                                <h5><input type="radio" name="BrandId" value="@brand.BrandId" @(ViewBag.BrandId == brand.BrandId ? "checked" : "") /> @brand.BrandName</h5>
+                            </li>
+                        }
+                    </ul>
+                    <h1 style="color:#59ab6e" class="h2 pb-4">Sort by Price</h1>
+                    <div style="display:flex; padding-bottom:50px;">
+                        <input type="radio" name="sort" value="asc" @("asc".Equals(ViewBag.Sort) ? "checked" : "") />ASC &nbsp;
+                        <input type="radio" name="sort" value="desc" @("desc".Equals(ViewBag.Sort) ? "checked" : "") />DESC
+                    </div>
+                    <!--<h1 style="color:#59ab6e" class="h2 pb-4">Choose a price range:</h1>-->
+                    <!--<div class="price-slider">
+                        <input type="range" id="priceRange" name="priceRange" min="0" max="10000" value="5000" oninput="updatePriceValue(this.value)" onchange="updatePriceValue(this.value)">
+                        <span id="priceValue">5000</span>
+                    </div>-->
+                    <button type="submit">Filter Product</button>
+                </form>
+            </div>
+
+            <div class="col-lg-9">
+                <form action="searchbyname" method="get">
+                    <div class="row" style="display:flex; margin-bottom:30px">
+                        <input type="text" name="name" value="@ViewBag.Name" class="col-lg-10" />
+                        <button class="col-lg-2" type="submit">Search</button>
+                    </div>
+                </form>
+
+                <div class="row">
+                    @if(Model.Count == 0)
+                    {
+                        <!--<h1 style="color:#59ab6e" class="h2 pb-4">This product not sell</h1>-->
+                        <h1 style="color:#59ab6e" class="h2 pb-4">@ViewBag.Err</h1>
+                    }else
+                    {
+                        @foreach (var p in Model.GroupBy(x => new { x.pd.ProductDetailId, x.color.ColorName }))
+                        {
+                            var product = p.First();
+                            <div class="col-md-4">
+                                <div class="card mb-4 product-wap rounded-0">
+                                    <div class="card rounded-0">
+                                        <img class="card-img rounded-0 img-fluid" src="~/img/@product.images[0].ImageUrl">
+                                        <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                            <!--<ul class="list-unstyled">
+                                                <li><a class="btn btn-success text-white" href="shop-single.html"><i class="far fa-heart"></i></a></li>
+                                                <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="far fa-eye"></i></a></li>
+                                                <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas fa-cart-plus"></i></a></li>
+                                            </ul>-->
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <a href="productdetail?Id=@product.pd.ProductDetailId&Color=@product.color.ColorName" class="h3 text-center text-decoration-none">@product.pd.ProductName @product.color.ColorName</a>
+                                        <p class="text-center mb-0">@product.pd.Price $</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                   
+                </div>
+                <div div="row">
+                    <ul class="pagination pagination-lg justify-content-end">
+                        <li class="page-item disabled">
+                            <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Content -->
+    <!-- Start Brands -->
+    <section class="bg-light py-5">
+        <div class="container my-4">
+            <div class="row text-center py-3">
+                <div class="col-lg-6 m-auto">
+                    <h1 class="h1">Our Brands</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        Lorem ipsum dolor sit amet.
+                    </p>
+                </div>
+                <div class="col-lg-9 m-auto tempaltemo-carousel">
+                    <div class="row d-flex flex-row">
+                        <!--Controls-->
+                        <div class="col-1 align-self-center">
+                            <a class="h1" href="#multi-item-example" role="button" data-bs-slide="prev">
+                                <i class="text-light fas fa-chevron-left"></i>
+                            </a>
+                        </div>
+                        <!--End Controls-->
+                        <!--Carousel Wrapper-->
+                        <div class="col">
+                            <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example" data-bs-ride="carousel">
+                                <!--Slides-->
+                                <div class="carousel-inner product-links-wap" role="listbox">
+
+                                    <!--First slide-->
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="~/img/brand_01.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="~/img/brand_02.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="~/img/brand_03.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="~/img/brand_04.png" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End First slide-->
+                                    <!--Second slide-->
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="~/img/brand_01.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="~/img/brand_02.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="~/img/brand_03.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="~/img/brand_04.png" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Second slide-->
+                                    <!--Third slide-->
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="~/img/brand_01.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="~/img/brand_02.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="~/img/brand_03.png" alt="Brand Logo"></a>
+                                            </div>
+                                            <div class="col-3 p-md-5">
+                                                <a href="#"><img class="img-fluid brand-img" src="~/img/brand_04.png" alt="Brand Logo"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Third slide-->
+
+                                </div>
+                                <!--End Slides-->
+                            </div>
+                        </div>
+                        <!--End Carousel Wrapper-->
+                        <!--Controls-->
+                        <div class="col-1 align-self-center">
+                            <a class="h1" href="#multi-item-example" role="button" data-bs-slide="next">
+                                <i class="text-light fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                        <!--End Controls-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End Brands-->
+    <!-- Start Footer -->
+    @Html.Partial("~/Views/footer.cshtml")
+    <!-- End Footer -->
+    <!-- Start Script -->
+    <script src="~/js/jquery-1.11.0.min.js"></script>
+    <script src="~/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/templatemo.js"></script>
+    <script src="~/js/custom.js"></script>
+    <!-- End Script -->
+    <script>
+        function updatePriceValue(val) {
+            document.getElementById('priceValue').textContent = val;
+        }
+    </script>
+</body>
+
+</html>

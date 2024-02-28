@@ -1,0 +1,71 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = LongShop3
+build_property.RootNamespace = LongShop3
+build_property.ProjectDir = D:\C#_project\ProjectByLong4\LongShop3\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\C#_project\ProjectByLong4\LongShop3
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/C\#_project/ProjectByLong4/LongShop3/Views/About.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWJvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/C\#_project/ProjectByLong4/LongShop3/Views/Contact.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFjdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/C\#_project/ProjectByLong4/LongShop3/Views/footer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcZm9vdGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/C\#_project/ProjectByLong4/LongShop3/Views/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/C\#_project/ProjectByLong4/LongShop3/Views/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/C\#_project/ProjectByLong4/LongShop3/Views/managebrands.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcbWFuYWdlYnJhbmRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/C\#_project/ProjectByLong4/LongShop3/Views/managecate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcbWFuYWdlY2F0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/C\#_project/ProjectByLong4/LongShop3/Views/manageorder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcbWFuYWdlb3JkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/C\#_project/ProjectByLong4/LongShop3/Views/manageproduct.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcbWFuYWdlcHJvZHVjdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/C\#_project/ProjectByLong4/LongShop3/Views/manageuser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcbWFuYWdldXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/C\#_project/ProjectByLong4/LongShop3/Views/Navbar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmF2YmFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/C\#_project/ProjectByLong4/LongShop3/Views/Shop-single.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hvcC1zaW5nbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/C\#_project/ProjectByLong4/LongShop3/Views/Shop.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hvcC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
