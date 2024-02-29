@@ -14,9 +14,19 @@ namespace LongShop3.Services
             _repo = repo;
         }
 
-        public List<ProductWithImageColor> GetAllProduct(int CategoryId, int BrandId, string sort)
+        public List<ProductWithImageColor> GetAllProduct(int CategoryId, int BrandId, string sort, int offset, int count)
         {
-            return _repo.GetAllProduct(CategoryId, BrandId, sort);
+            return _repo.GetAllProduct(CategoryId, BrandId, sort, offset, count);
+        }
+
+        public List<ProductWithImageColor> GetAllProductForAdmin(int CategoryId, int BrandId, string sort, int offset, int count)
+        {
+            return _repo.GetAllProductForAdmin(CategoryId, BrandId, sort, offset, count);
+        }
+
+        public int GetNumberofproduct(int CategoryId, int BrandId)
+        {
+            return _repo.GetNumberofproduct(CategoryId, BrandId);
         }
 
         public ProductWithImageColor GetProductDetail(int Id, string color)

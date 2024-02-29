@@ -1,0 +1,125 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: white;
+            color: white;
+            padding: 10px 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar-left h1 {
+            margin: 0;
+        }
+
+        .navbar-right a {
+            color: #59ab6e;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .profile-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .avatar {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+        }
+
+            .avatar img {
+                width: 400px;
+                height: 400px;
+                
+                object-fit: cover;
+                border: 2px solid #007bff;
+            }
+
+        .profile-info {
+            flex: 2;
+            padding: 20px;
+        }
+
+            .profile-info h2 {
+                margin-top: 0;
+            }
+
+            .profile-info ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+                .profile-info ul li {
+                    padding: 20px 0;
+                    border-bottom: 1px solid #f4f4f4;
+                }
+
+    </style>
+</head>
+<body>
+    @Html.Partial("~/Views/Navbar.cshtml")
+    <div class="navbar">
+        <div class="container">
+            <div class="navbar-left">
+                
+            </div>
+            <div class="navbar-right">
+                <!-- Các option khác có thể được bổ xung ở đây -->
+                <a href="#">Edit profile</a>
+                <a href="#">Change password</a>
+                <a href="#">Order history</a>
+                <a href="#">View Cart</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-container">
+        <div class="avatar">
+            <!-- Ở đây bạn có thể đặt ảnh đại diện của người dùng -->
+            <img src="~/img/p284.png" alt="Avatar">
+            <a style="padding:20px;text-decoration:none" href="#">Change avatar</a>
+        </div>
+        <div class="profile-info">
+            <h2>User Name</h2>
+            <ul>
+                <li>Email: john.doe@example.com</li>
+                <li>Phone: 123-456-7890</li>
+                <li>Location: New York, USA</li>
+                <li>Occupation: Software Developer</li>
+            </ul>
+        </div>
+    </div>
+    
+</body>
+</html>

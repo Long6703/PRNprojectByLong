@@ -50,6 +50,7 @@ D:\C#_project\ProjectByLong4\LongShop3\obj\Debug\net6.0\LongShop3.csproj.CoreCom
 D:\C#_project\ProjectByLong4\LongShop3\obj\Debug\net6.0\LongShop3.MvcApplicationPartsAssemblyInfo.cache
 D:\C#_project\ProjectByLong4\LongShop3\obj\Debug\net6.0\LongShop3.RazorAssemblyInfo.cache
 D:\C#_project\ProjectByLong4\LongShop3\obj\Debug\net6.0\LongShop3.RazorAssemblyInfo.cs
+D:\C#_project\ProjectByLong4\LongShop3\obj\Debug\net6.0\LongShop3.sourcelink.json
 D:\C#_project\ProjectByLong4\LongShop3\obj\Debug\net6.0\staticwebassets.build.json
 D:\C#_project\ProjectByLong4\LongShop3\obj\Debug\net6.0\staticwebassets.development.json
 D:\C#_project\ProjectByLong4\LongShop3\obj\Debug\net6.0\staticwebassets\msbuild.LongShop3.Microsoft.AspNetCore.StaticWebAssets.props

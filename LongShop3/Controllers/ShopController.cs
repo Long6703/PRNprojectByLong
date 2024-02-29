@@ -18,28 +18,52 @@ namespace LongShop3.Controllers
         }
 
         [Route("/shop")]
-        public IActionResult Shop(int CategoryId, int BrandId, string sort)
+        public IActionResult Shop(int CategoryId, int BrandId, string sort, int page = 1)
         {
             ViewBag.CategoryId = CategoryId;
             ViewBag.BrandId = BrandId;
-            ViewBag.Sort = (String) sort;
-            List<ProductWithImageColor> listproduct = _productServicecs.GetAllProduct(CategoryId, BrandId, sort);
-            if(listproduct.Count == 0)
+            ViewBag.Sort = sort;
+
+            if (page <= 0)
             {
-                ViewBag.Err = (String)"We have not this product :(((";
+                page = 1;
             }
+            int pagesize = 36;
+            List<ProductWithImageColor> listproduct = _productServicecs.GetAllProduct(CategoryId, BrandId, sort, (page - 1) * pagesize, pagesize);
+            foreach (ProductWithImageColor item in listproduct)
+            {
+                Console.WriteLine(item.pd.ProductName + " " + item.color.ColorName);
+            }
+            if (listproduct.Count == 0)
+            {
+                ViewBag.Err = "We have not this product :(((";
+            }
+
+            int totalproduct = _productServicecs.GetNumberofproduct(CategoryId, BrandId);
+            int totalpage = (int)Math.Ceiling((double)totalproduct / pagesize);
+            if (totalpage == 0)
+            {
+                totalpage = 1;
+            }
+
+            ViewBag.totalpage = totalpage;
+            ViewBag.currentpage = page;
+            ViewBag.CategoryId = CategoryId;
+            ViewBag.BrandId = BrandId;
+            ViewBag.sort = sort;
+
             return View("~/Views/Shop.cshtml", listproduct);
         }
 
         [Route("/searchbyname")]
-        public IActionResult SearchbyName(string? name)
+        public IActionResult SearchbyName(string name)
         {
             if(name == null)
             {
                 return RedirectToAction("/shop");
             }
             List<ProductWithImageColor> list = _productServicecs.SearchByName(name);
-            ViewBag.Name = name;
+            ViewBag.Name = (string)name;
             return View("~/Views/Shop.cshtml", list);
         }
 

@@ -2,6 +2,9 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    @using LongShop3.Models;
+    @model List<Brand>
+    Brand b = (Brand)ViewBag.brand;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -23,6 +26,121 @@
 
     <!-- Custom styles for this template-->
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: darkblue;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+            .pagination a {
+                color: black;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+                transition: background-color .3s;
+            }
+
+                .pagination a.active {
+                    background-color: #04AA6D;
+                    color: white;
+                    border-radius: 5px;
+                }
+
+                .pagination a:hover:not(.active) {
+                    background-color: #ddd;
+                }
+
+                .pagination a:first-child {
+                    border-top-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                }
+
+                .pagination a:last-child {
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                }
+
+        .container {
+            max-width: 80%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .form-group1,
+        .form-group2,
+        .form-group3 {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="radio"] {
+            width: calc(100% - 40px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .button1 {
+            width: calc(100% - 40px);
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: auto;
+        }
+
+            .button1:hover {
+                background-color: #0056b3;
+            }
+    </style>
 
 </head>
 
@@ -177,7 +295,59 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Admin Name :  + Manage Brands</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Admin Name :  </h1>
+                    <form action="addnewbrand" >
+                        <div style="display:flex; gap:20px">
+                            <h5 style="color:black"><a href="#">Enter name new brand</a></h5>
+                            <input type="text" name="newbrand" />
+                            <button type="submit">Add</button>
+                            <h1>@ViewBag.Err</h1>
+                        </div>
+                    </form>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Brand Name</th>
+                                <th>Active</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var b in Model)
+                            {
+                                <tr>
+                                    <td>@b.BrandId</td>
+                                    <td>@b.BrandName</td>
+                                    <td>@(b.IsActive == true ? "YES" : "NO")</td>
+                                    <td><a href="editbrand?ID=@b.BrandId">Edit</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @if (b != null)
+                    {
+                        <div class="container">
+                            <h2>Edit Brand</h2>
+                            <form action="/updateBrand" method="post">
+                                <div class="form-group1">
+                                    <label for="brandId">ID:</label>
+                                    <input type="text" id="brandId" name="newbrand.brandId" value="@b.BrandId" readonly>
+                                </div>
+                                <div class="form-group2">
+                                    <label for="brandName">Name:</label>
+                                    <input type="text" id="brandName" name="newbrand.brandName" value="@b.BrandName" required>
+                                </div>
+                                <div class="form-group3">
+                                    <input type="radio" id="activeStatus" name="newbrand.IsActive" value="true" @(b.IsActive == true ? "checked" : "")>
+                                    <label for="activeStatus">Active</label><br>
+                                    <input type="radio" id="inactiveStatus" name="newbrand.IsActive" value="false" @(b.IsActive == false ? "checked" : "")>
+                                    <label for="inactiveStatus">Not Active</label><br>
+                                </div>
+                                <button class="button1" type="submit">Save</button>
+                            </form>
+                        </div>
+                    }
 
                 </div>
                 <!-- /.container-fluid -->

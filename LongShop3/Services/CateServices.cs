@@ -13,9 +13,29 @@ namespace LongShop3.Services
             _cate = cate;
         }
 
+        public void AddCate(Category cate)
+        {
+            _cate.AddCate(cate);
+        }
+
         public List<Category> GetAllCate()
         {
            return _cate.GetAllCate();
+        }
+
+        public List<Category> GetAllCateForAdmin()
+        {
+            return _cate.GetAllCateForAdmin();
+        }
+
+        public Category GetCateById(int id)
+        {
+            return _cate.GetCateByID(id);
+        }
+
+        public void UpdateCate(Category cate)
+        {
+            _cate.UpdateCate(cate);
         }
     }
 }

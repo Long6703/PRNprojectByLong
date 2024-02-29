@@ -6,5 +6,6 @@ namespace LongShop3.Services.IServices
     {
         public User getUser(string username, string pass);
         public void getAllFeature(string username);
+
     }
 }
