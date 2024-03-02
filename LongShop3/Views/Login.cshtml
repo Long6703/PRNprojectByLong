@@ -17,6 +17,8 @@
     <!-- partial:index.partial.html -->
     <div class="form">
 
+        <div>@ViewBag.Err</div>
+
         <ul class="tab-group">
             <li class="tab active"><a href="#signup">Sign Up</a></li>
             <li class="tab"><a href="#login">Log In</a></li>
@@ -26,7 +28,7 @@
             <div id="signup">
                 <h1>Sign Up</h1>
 
-                <form action="/" method="post">
+                <form action="dosignup" method="post">
 
                     <!--<div class="top-row">
                         <div class="field-wrap">
@@ -48,24 +50,38 @@
                         <label>
                             Username<span class="req">*</span>
                         </label>
-                        <input type="text" required autocomplete="off" />
+                        <input name="newuser.Username" type="text" required autocomplete="off" />
+                    </div>
+
+                    <div class="field-wrap">
+                        <label>
+                            Display name<span class="req">*</span>
+                        </label>
+                        <input name="newuser.DisplayName" type="text" required autocomplete="off" />
                     </div>
 
                     <div class="field-wrap">
                         <label>
                             Email Address<span class="req">*</span>
                         </label>
-                        <input type="email" required autocomplete="off" />
+                        <input name="newuser.Email" type="email" required autocomplete="off" />
                     </div>
 
                     <div class="field-wrap">
                         <label>
                             Set A Password<span class="req">*</span>
                         </label>
-                        <input type="password" required autocomplete="off" />
+                        <input name="newuser.Password" type="password" required autocomplete="off" />
                     </div>
 
-                    <button type="submit" class="button button-block" />Get Started</button>
+                    <div class="field-wrap">
+                        <label>
+                            Confirm A Password<span class="req">*</span>
+                        </label>
+                        <input name="confirmpassword" type="password" required autocomplete="off" />
+                    </div>
+
+                    <button type="submit" class="button button-block">Sign Up</button>
 
                 </form>
 

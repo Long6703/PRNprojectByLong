@@ -30,10 +30,6 @@ namespace LongShop3.Controllers
             }
             int pagesize = 36;
             List<ProductWithImageColor> listproduct = _productServicecs.GetAllProduct(CategoryId, BrandId, sort, (page - 1) * pagesize, pagesize);
-            foreach (ProductWithImageColor item in listproduct)
-            {
-                Console.WriteLine(item.pd.ProductName + " " + item.color.ColorName);
-            }
             if (listproduct.Count == 0)
             {
                 ViewBag.Err = "We have not this product :(((";
@@ -68,11 +64,14 @@ namespace LongShop3.Controllers
         }
 
         [Route("/productdetail")]
-        public IActionResult ProductDetail(int Id, string Color)
+        public IActionResult ProductDetail(int Id, int Color)
         {
             Console.WriteLine(Id + Color);
             ProductWithImageColor pic = _productServicecs.GetProductDetail(Id, Color);
+            Product_Brand_Cate product_Brand_Cate = _productServicecs.GetProductDetailInfor(Id);
+            ViewBag.infor = product_Brand_Cate;
             return View("~/Views/Shop-single.cshtml", pic);
+
         }
     }
 }

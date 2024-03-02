@@ -23,5 +23,10 @@ namespace LongShop3.Services
             var user = _urepo.GetUser(username, pass);
             return user;
         }
+
+        public bool SignUp(User user)
+        {
+            return _urepo.signup(user);
+        }
     }
 }

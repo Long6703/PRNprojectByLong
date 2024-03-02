@@ -1,0 +1,62 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0px;
+        }
+
+        .thankyou-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+            margin: auto 300px;
+        }
+
+        .thankyou-content {
+            text-align: center;
+        }
+
+        .thankyou-heading {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .thankyou-message {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .thankyou-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    @Html.Partial("~/Views/Navbar.cshtml")
+    <div class="thankyou-container">
+        <div class="thankyou-content">
+            <h2 class="thankyou-heading">Thank You!</h2>
+            <p class="thankyou-message">Your order has been placed successfully.</p>
+            <a href="home" class="thankyou-link">Back to Home</a>
+        </div>
+    </div>
+    @Html.Partial("~/Views/footer.cshtml")
+</body>
+</html>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "AQ3p8PyVRS69gtKxQ74HlXlZn88bFjoa6IgJnbZ5U0Q=",
+  "Hash": "rHZoRm2zZ/gu7bSOQ7aFtvyD39wrTDHzbupGR3fnX1o=",
   "Source": "LongShop3",
   "BasePath": "_content/LongShop3",
   "Mode": "Default",
@@ -663,12 +663,12 @@
       "OriginalItemSpec": "wwwroot\\img\\p113.jpg"
     },
     {
-      "Identity": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\p114.png",
+      "Identity": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\p114.jpg",
       "SourceId": "LongShop3",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\",
       "BasePath": "_content/LongShop3",
-      "RelativePath": "img/p114.png",
+      "RelativePath": "img/p114.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -679,7 +679,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\p114.png"
+      "OriginalItemSpec": "wwwroot\\img\\p114.jpg"
     },
     {
       "Identity": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\p161.jpg",

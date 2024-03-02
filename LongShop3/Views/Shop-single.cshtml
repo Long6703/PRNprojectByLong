@@ -66,9 +66,13 @@
         <div class="container pb-5">
             <div class="row">
                 <div class="col-lg-5 mt-5">
-                    <div class="card mb-3">
-                        <img class="card-img img-fluid" src="~/img/product_single_10.jpg" alt="Card image cap" id="product-detail">
-                    </div>
+                    @foreach (var i in Model.images)
+                    {
+                        <div class="card mb-3">
+                            <img class="card-img img-fluid" src="~/img/@i.ImageUrl" alt="Card image cap" id="product-detail">
+                        </div>
+                        break;
+                    }
                     <div class="row">
                         <!--Start Controls-->
                         <div class="col-1 align-self-center">
@@ -82,35 +86,40 @@
                         <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item" data-bs-ride="carousel">
                             <!--Start Slides-->
                             <div class="carousel-inner product-links-wap" role="listbox">
-                                @foreach(var image in Model.images)
-                                {
                                     <!--First slide-->
-                                    <div class="carousel-item active">
-                                        <div class="row">
+                                <div class="carousel-item active">
+                                    <div class="row">
+                                        @foreach(var i in Model.images)
+                                        {
                                             <div class="col-3">
                                                 <a href="#">
-                                                    <img class="card-img img-fluid" src="~/img/@image.ImageUrl" alt="Product Image 1">
+                                                    <img class="card-img img-fluid" src="~/img/@i.ImageUrl" alt="@i.ImageUrl">
                                                 </a>
                                             </div>
-                                            <div class="col-3">
-                                                <a href="#">
-                                                    <img class="card-img img-fluid" src="~/img/@image.ImageUrl" alt="Product Image 2">
-                                                </a>
-                                            </div>
-                                            <div class="col-3">
-                                                <a href="#">
-                                                    <img class="card-img img-fluid" src="~/img/@image.ImageUrl" alt="Product Image 3">
-                                                </a>
-                                            </div>
-                                            <div class="col-3">
-                                                <a href="#">
-                                                    <img class="card-img img-fluid" src="~/img/@image.ImageUrl" alt="Product Image 3">
-                                                </a>
-                                            </div>
+                                        }
+                                        <!--<div class="col-3">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="~/img/" alt="Product Image 1">
+                                            </a>
                                         </div>
+                                        <div class="col-3">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="~/img/" alt="Product Image 2">
+                                            </a>
+                                        </div>
+                                        <div class="col-3">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="~/img/" alt="Product Image 3">
+                                            </a>
+                                        </div>
+                                        <div class="col-3">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="~/img/" alt="Product Image 3">
+                                            </a>
+                                        </div>-->
                                     </div>
+                                </div>
                                     <!--/.First slide-->
-                                }
                                 
                                 <!--Second slide-->
                                 <!--<div class="carousel-item">
@@ -172,27 +181,36 @@
                 <div class="col-lg-7 mt-5">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="h2">@Model.pd.ProductName</h1>
-                            <p class="h3 py-2">$@Model.pd.Price</p>
-                            <p class="py-2">
+                            <h1 class="h2">@ViewBag.infor.pd.ProductName</h1>
+                            <p class="h3 py-2">$@ViewBag.infor.pd.Price</p>
+                            <!--<p class="py-2">
                                 <i class="fa fa-star text-warning"></i>
                                 <i class="fa fa-star text-warning"></i>
                                 <i class="fa fa-star text-warning"></i>
                                 <i class="fa fa-star text-warning"></i>
                                 <i class="fa fa-star text-secondary"></i>
                                 <span class="list-inline-item text-dark">Rating 4.8 | 36 Comments</span>
-                            </p>
+                            </p>-->
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <h6>Brand:</h6>
                                 </li>
                                 <li class="list-inline-item">
-                                    <p class="text-muted"><strong>Easy Wear</strong></p>
+                                    <strong><a style="text-decoration:none" href="shop?BrandId=@ViewBag.infor.brand.BrandId"><p class="text-muted">@ViewBag.infor.brand.BrandName</p></a></strong>
+                                </li>
+                            </ul>
+
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>Category:</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <strong><a style="text-decoration:none" href="shop?CategoryId=@ViewBag.infor.category.CategoryId"><p class="text-muted">@ViewBag.infor.category.CategoryName</p></a></strong>
                                 </li>
                             </ul>
 
                             <h6>Description:</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temp incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse. Donec condimentum elementum convallis. Nunc sed orci a diam ultrices aliquet interdum quis nulla.</p>
+                            <p>@ViewBag.infor.pd.Description</p>
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <h6>Avaliable Color :</h6>
@@ -200,17 +218,6 @@
                                 <li class="list-inline-item">
                                     <p class="text-muted"><strong>@Model.color.ColorName</strong></p>
                                 </li>
-                            </ul>
-
-                            <h6>Specification:</h6>
-                            <ul class="list-unstyled pb-3">
-                                <li>Lorem ipsum dolor sit</li>
-                                <li>Amet, consectetur</li>
-                                <li>Adipiscing elit,set</li>
-                                <li>Duis aute irure</li>
-                                <li>Ut enim ad minim</li>
-                                <li>Dolore magna aliqua</li>
-                                <li>Excepteur sint</li>
                             </ul>
 
                             <form action="" method="GET">
@@ -240,6 +247,14 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <h6>Quantity in Stock:</h6>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <p class="text-muted"><strong>100</strong></p>
+                                    </li>
+                                </ul>
                                 <div class="row pb-3">
                                     <div class="col d-grid">
                                         <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
@@ -249,7 +264,6 @@
                                     </div>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>

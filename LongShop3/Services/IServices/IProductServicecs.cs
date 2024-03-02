@@ -7,8 +7,9 @@ namespace LongShop3.Services.IServices
     {
         public List<ProductWithImageColor> GetAllProduct(int CategoryId, int BrandId, string sort, int offset, int count);
         public List<ProductWithImageColor> SearchByName(string? name);
-        public ProductWithImageColor GetProductDetail(int Id, string color);
+        public ProductWithImageColor GetProductDetail(int Id, int colorid);
         public int GetNumberofproduct(int CategoryId, int BrandId);
         public List<ProductWithImageColor> GetAllProductForAdmin(int CategoryId, int BrandId, string sort, int offset, int count);
+        public Product_Brand_Cate GetProductDetailInfor(int Id);
     }
 }

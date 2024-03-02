@@ -29,9 +29,14 @@ namespace LongShop3.Services
             return _repo.GetNumberofproduct(CategoryId, BrandId);
         }
 
-        public ProductWithImageColor GetProductDetail(int Id, string color)
+        public ProductWithImageColor GetProductDetail(int Id, int colorid)
         {
-            return _repo.GetProductDetailById(Id, color);
+            return _repo.GetProductDetailById(Id, colorid);
+        }
+
+        public Product_Brand_Cate GetProductDetailInfor(int Id)
+        {
+            return _repo.GetProductDetailInfor(Id);
         }
 
         public List<ProductWithImageColor> SearchByName(string? name)

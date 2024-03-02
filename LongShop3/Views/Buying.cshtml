@@ -1,0 +1,91 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .buying-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            padding: 20px;
+            margin: auto 300px;
+        }
+
+        .buying-column {
+            flex: 1;
+            padding: 20px;
+            
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .buying-order-summary {
+            
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .buying-product-image {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .buying-complete-order-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    @Html.Partial("~/Views/Navbar.cshtml")
+    <div class="buying-container">
+        <div class="buying-column">
+            <div class="buying-order-summary">
+                <h2>Order Summary</h2>
+                <ul>
+                    <li>Product Price: $100</li>
+                    <li>Shipping: $10</li>
+                    <li><strong>Total: $110</strong></li>
+                </ul>
+            </div>
+            <div class="buying-column">
+                <h2>Customer Information</h2>
+                <p>Name: John Doe</p>
+                <p>Email: john@example.com</p>
+                <p>Address: 123 Main Street</p>
+            </div>
+
+            <button style="margin-top:100px; margin-left:200px" class="buying-complete-order-button">Complete Order</button>
+        </div>
+        <div class="buying-column">
+            <img src="~/img/p114.jpg" alt="Product Image" class="buying-product-image">
+            
+        </div>
+    </div>
+    @Html.Partial("~/Views/footer.cshtml")
+</body>
+</html>
+
+
+

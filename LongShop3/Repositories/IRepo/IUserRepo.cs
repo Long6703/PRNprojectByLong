@@ -7,5 +7,6 @@ namespace LongShop3.Repositories.IRepo
         public User GetUser(string name, string pass);
 
         public List<Feature> getAllFeature(string name);
+        bool signup(User user);
     }
 }

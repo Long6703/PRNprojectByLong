@@ -33,5 +33,23 @@ namespace LongShop3.Controllers
             HttpContext.Session.SetString("user", serializedUser);
             return Redirect("/home");
         }
+
+        [Route("/dosignup")]
+        public IActionResult Dosignup(User newuser, string confirmpassword)
+        {
+            if(newuser.Password != confirmpassword)
+            {
+                Console.WriteLine("Not match password");
+            }
+            else
+            {
+                if (_userServices.SignUp(newuser))
+                {
+                    Console.WriteLine("Add success");
+                    return Redirect("/home");
+                }
+            }
+            return Redirect("/login");
+        }
     }
 }

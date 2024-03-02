@@ -1,0 +1,123 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .cart-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 75vh;
+            padding: 20px;
+            margin : auto 300px;
+        }
+
+        .cart-column {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: auto;
+        }
+
+        .cart-item-details {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+        }
+
+        .cart-item-price {
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        .cart-summary {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .cart-total {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .cart-checkout-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    @Html.Partial("~/Views/Navbar.cshtml")
+    <div class="cart-container">
+        <div class="cart-column">
+            <div class="cart-item">
+                <img src="~/img/p162.jpg" alt="Product Image" class="cart-item-image">
+                <div class="cart-item-details">
+                    <h3 class="cart-item-name">Product Name</h3>
+                    <p class="cart-item-price">$100</p>
+                    <p>Size: M</p>
+                    <p>Color: Blue</p>
+                    <input type="number" value="1" min="1">
+                </div>
+            </div>
+            <div class="cart-item">
+                <img src="~/img/p112.jpg" alt="Product Image" class="cart-item-image">
+                <div class="cart-item-details">
+                    <h3 class="cart-item-name">Another Product Name</h3>
+                    <p class="cart-item-price">$150</p>
+                    <p>Size: L</p>
+                    <p>Color: Red</p>
+                    <input type="number" value="1" min="1">
+                </div>
+            </div>
+        </div>
+        <div class="cart-column">
+            <div class="cart-summary">
+                <h2>Cart Summary</h2>
+                <p>Subtotal: $250</p>
+                <p>Shipping: $10</p>
+                <p class="cart-total">Total: $260</p>
+                <button class="cart-checkout-button">Checkout</button>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("~/Views/footer.cshtml")
+</body>
+</html>

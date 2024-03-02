@@ -27,12 +27,29 @@ namespace LongShop3.Repositories
             return list.Skip(offset).Take(count).ToList();
         }
 
-        public ProductWithImageColor GetProductDetailById(int id, string color)
+        public ProductWithImageColor GetProductDetailById(int id, int colorid)
         {
-            List<ProductWithImageColor> list = getAll();
+            List<ProductWithImageColor> list = null;
+            using (var context = new SHOPLONG5Context())
+            {
+                // Lấy tất cả các bản ghi và nhóm chúng dựa trên ProductDetailId và ColorId
+                var groupedResult = from pd in context.ProductDetails
+                                    join i in context.Images on pd.ProductDetailId equals i.ProductDetailId
+                                    join c in context.Colors on i.ColorId equals c.ColorId
+                                    group new { pd, i, c } by new { pd.ProductDetailId, c.ColorId, c.ColorName } into g
+                                    select new ProductWithImageColor
+                                    {
+                                        pd = g.FirstOrDefault(x => x.pd.IsActive == true).pd,
+                                        color = new Color { ColorId = g.Key.ColorId, ColorName = g.Key.ColorName }, 
+                                        images = g.Select(x => new Image { ImageId = x.i.ImageId, ImageUrl = x.i.ImageUrl }).ToList()
+                                    };
+
+                list = groupedResult.ToList();
+
+            }
             foreach (ProductWithImageColor item in list)
             {
-                if(item.pd.ProductDetailId == id && color.Equals(item.color.ColorName))
+                if(item.pd.ProductDetailId == id && item.color.ColorId == colorid)
                 {
                     return item;
                 }
@@ -75,7 +92,7 @@ namespace LongShop3.Repositories
                          select new ProductWithImageColor
                          {
                              pd = pd,
-                             color = new Color { ColorName = c.ColorName },
+                             color = new Color { ColorName = c.ColorName, ColorId = c.ColorId },
                              images = new List<Image> { new Image { ImageUrl = i.ImageUrl } }
                          };
 
@@ -109,21 +126,26 @@ namespace LongShop3.Repositories
 
         public List<ProductWithImageColor> GetAllProductForAdmin(int categoryId, int brandId, string sort, int offset, int count)
         {
-            List<ProductWithImageColor> list = getAll();
+            return null;
+        }
 
-            if (categoryId != 0)
+        public Product_Brand_Cate GetProductDetailInfor(int id)
+        {
+            using (SHOPLONG5Context context = new SHOPLONG5Context())
             {
-                list = list.Where(x => x.pd.CategoryId == categoryId && x.pd.IsActive == true).ToList();
+                var query = (from pd in context.ProductDetails // Thay thế ProductDetails bằng tên DbSet tương ứng trong DbContext
+                            join b in context.Brands on pd.BrandId equals b.BrandId // Giả sử thuộc tính là BrandId
+                            join ca in context.Categories on pd.CategoryId equals ca.CategoryId // Giả sử thuộc tính là CategoryId
+                            where pd.ProductDetailId == id
+                            select new Product_Brand_Cate
+                            {
+                                pd = pd,
+                                brand = b,
+                                category = ca
+                            }).FirstOrDefault();
+
+                return query;
             }
-
-            if (brandId != 0)
-            {
-                list = list.Where(x => x.pd.BrandId == brandId && x.pd.IsActive == true).ToList();
-            }
-
-            list = SortProduct(list, sort);
-
-            return list.Skip(offset).Take(count).ToList();
         }
     }
 }

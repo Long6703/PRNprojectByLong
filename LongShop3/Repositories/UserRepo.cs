@@ -21,5 +21,29 @@ namespace LongShop3.Repositories
             return _context.Users.FirstOrDefault
                 (x => x.Username.Equals(name) && x.Password.Equals(pass) && x.IsActive == true);
         }
+
+        public bool signup(User user)
+        {
+            using (SHOPLONG5Context _context = new SHOPLONG5Context())
+            {
+                try
+                {
+                    var userold = _context.Users.FirstOrDefault(x => x.Username.Equals(user.Username));
+                    if (userold != null)
+                    {
+                        Console.WriteLine("Duplicate user name, username is primary key");
+                        return false;
+                    }
+                    _context.Users.Add(user);
+                    _context.SaveChanges();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return false;
+        }
     }
 }
