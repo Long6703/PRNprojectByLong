@@ -215,31 +215,40 @@
                                 <li class="list-inline-item">
                                     <h6>Avaliable Color :</h6>
                                 </li>
-                                <li class="list-inline-item">
-                                    <p class="text-muted"><strong>@Model.color.ColorName</strong></p>
-                                </li>
+                                @foreach (var c in ViewBag.colors)
+                                {
+                                    <li class="list-inline-item">
+                                        <a style="text-decoration:none" href="productdetail?Id=@ViewBag.infor.pd.ProductDetailId&Color=@c.ColorId"><p class="text-muted"><strong>@c.ColorName</strong></p></a>
+                                    </li>
+                                }
                             </ul>
-
-                            <form action="" method="GET">
+                            <form action="doshopping" method="post">
                                 <input type="hidden" name="product-title" value="Activewear">
+                                <input type="hidden" name="colorid" value="@Model.color.ColorId" />
+                                <input type="hidden" name="pdid" value="@Model.pd.ProductDetailId" />
                                 <div class="row">
                                     <div class="col-auto">
                                         <ul class="list-inline pb-3">
                                             <li class="list-inline-item">
                                                 Size :
-                                                <input type="hidden" name="product-size" id="product-size" value="S">
+                                                
                                             </li>
-                                            <li class="list-inline-item"><span class="btn btn-success btn-size">S</span></li>
+                                            @foreach (var s in ViewBag.sizes)
+                                            {
+                                                <li class="list-inline-item"><span class="btn btn-success btn-size">@s.SizeName</span></li>
+                                                <input type="hidden" name="sizename" id="product-size" value="" />
+                                            }
+                                            <!--<li class="list-inline-item"><span class="btn btn-success btn-size">S</span></li>
                                             <li class="list-inline-item"><span class="btn btn-success btn-size">M</span></li>
                                             <li class="list-inline-item"><span class="btn btn-success btn-size">L</span></li>
-                                            <li class="list-inline-item"><span class="btn btn-success btn-size">XL</span></li>
+                                            <li class="list-inline-item"><span class="btn btn-success btn-size">XL</span></li>-->
                                         </ul>
                                     </div>
                                     <div class="col-auto">
                                         <ul class="list-inline pb-3">
                                             <li class="list-inline-item text-right">
                                                 Quantity
-                                                <input type="hidden" name="product-quanity" id="product-quanity" value="1">
+                                                <input type="hidden" name="quanity" id="product-quanity" value="1">
                                             </li>
                                             <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
                                             <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
@@ -247,14 +256,6 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <ul class="list-inline">
-                                    <li class="list-inline-item">
-                                        <h6>Quantity in Stock:</h6>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <p class="text-muted"><strong>100</strong></p>
-                                    </li>
-                                </ul>
                                 <div class="row pb-3">
                                     <div class="col d-grid">
                                         <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
@@ -318,7 +319,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="p-2 pb-3">
                     <div class="product-wap card rounded-0">
                         <div class="card rounded-0">
@@ -784,6 +784,18 @@
                 }
             }
             ]
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            // Lấy giá trị từ query string
+            var urlParams = new URLSearchParams(window.location.search);
+            var addSuccess = urlParams.get('AddSuccess');
+
+            // Kiểm tra giá trị và hiển thị thông báo
+            if (addSuccess === 'true') {
+                alert('Add to cart success!');
+            }
         });
     </script>
     <!-- End Slider Script -->

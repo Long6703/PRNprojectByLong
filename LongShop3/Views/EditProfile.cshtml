@@ -4,6 +4,7 @@
 @{
     @using LongShop3.Models;
     @model User
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -62,7 +63,6 @@
             .avatar img {
                 width: 400px;
                 height: 400px;
-                
                 object-fit: cover;
                 border: 2px solid #007bff;
             }
@@ -94,12 +94,11 @@
     <div class="navbar">
         <div class="container">
             <div class="navbar-left">
-                
             </div>
             <div class="navbar-right">
                 <!-- Các option khác có thể được bổ xung ở đây -->
                 <a href="editprofile">Edit profile</a>
-                <a href="changepass">Change password</a>
+                <a href="#">Change password</a>
                 <a href="#">Order history</a>
                 <a href="viewcart">View Cart</a>
             </div>
@@ -112,22 +111,44 @@
             <img src="~/img/p284.png" alt="Avatar">
             <a style="padding:20px;text-decoration:none" href="#">Change avatar</a>
         </div>
+
+
         <div class="profile-info">
-            <h2>@Model.DisplayName</h2>
-            <ul>
-                <li>Email: @Model.Email</li>
-                <li>Phone: @Model.PhoneNumber</li>
-                <li>Location:
-                    <select>
-                        @foreach (var a in ViewBag.Address)
-                        {
-                            <option>@a.AddressName</option>
-                        }
-                    </select>
-                </li>
-            </ul>
+            <form action="doEdit">
+                <h2><input type="text" name="DisplayName" value="@Model.DisplayName"</h2>
+                <ul>
+                    <li>Email: <input type="text" name="Email" value="@Model.Email" </li>
+                    <li>Phone: <input type="text" name="PhoneNumber" value="@Model.PhoneNumber"</li>
+                    <li>
+                        Address:
+                        <select>
+                            @foreach (var a in ViewBag.Address)
+                            {
+                                <option>
+                                    @a.AddressName
+                                </option>
+                            }
+                        </select>
+                    </li>
+                    <input id="newAddressInput" type="text" name="newaddress" />
+                    <button id="addNewAddressButton">Add new address</button>
+                    <br />
+                    <button type="submit" style="margin-top:20px">Save</button>
+                </ul>
+            </form>
         </div>
+
+
+
     </div>
-    
+    <script>
+        const newAddressInput = document.getElementById('newAddressInput');
+        const addNewAddressButton = document.getElementById('addNewAddressButton');
+        addNewAddressButton.addEventListener('click', function () {
+            const newAddress = newAddressInput.value;
+            const url = 'addnewaddress?address=' + encodeURIComponent(newAddress);
+            window.location.href = url;
+        });
+    </script>
 </body>
 </html>

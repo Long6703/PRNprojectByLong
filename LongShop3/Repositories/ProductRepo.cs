@@ -2,6 +2,7 @@
 using LongShop3.Repositories.IRepo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace LongShop3.Repositories
 {
@@ -56,6 +57,8 @@ namespace LongShop3.Repositories
             }
             return null;
         }
+
+        
 
         public List<ProductWithImageColor> SearchByName(string? name)
         {
@@ -147,5 +150,110 @@ namespace LongShop3.Repositories
                 return query;
             }
         }
+
+        public List<Color> GetColorsByProductId(int productId)
+        {
+            using (SHOPLONG5Context context = new SHOPLONG5Context())
+            {
+                var query = (from c in context.Colors
+                             join sc in context.SizeColorStocks on c.ColorId equals sc.ColorId
+                             where sc.ProductDetailId == productId
+                             select new Color
+                             {
+                                 ColorId = c.ColorId,
+                                 ColorName = c.ColorName
+                             }).Distinct();
+
+                return query.ToList();
+            }
+        }
+
+        public List<Size> GetSizesByProductIdAndColorId(int productId, int colorId)
+        {
+            using (SHOPLONG5Context context = new SHOPLONG5Context())
+            {
+                var query = (from s in context.Sizes
+                             join sc in context.SizeColorStocks on s.SizeId equals sc.SizeId
+                             where sc.ProductDetailId == productId && sc.ColorId == colorId
+                             select new Size
+                             {
+                                 SizeId = s.SizeId,
+                                 SizeName = s.SizeName
+                             }).Distinct();
+
+                return query.ToList();
+            }
+        }
+
+        public void AddtoCartRepo(int pid, int cid, int sid, int quantity, string username)
+        {
+            bool check = GetOrCreateCart(pid, cid, sid, username, quantity);
+            if(check == true)
+            {
+                Console.WriteLine("Add suecess");
+            }
+            Console.WriteLine("Fail");
+        }
+
+        private bool GetOrCreateCart(int pid, int cid, int sid, string username, int quantity)
+        {
+            using (var ctx = new SHOPLONG5Context())
+            {
+                int? commonId = ctx.SizeColorStocks
+                                  .Where(x => x.ProductDetailId == pid && x.ColorId == cid && x.SizeId == sid)
+                                  .Select(x => x.CommonId)
+                                  .FirstOrDefault();
+
+                if (!commonId.HasValue)
+                {
+                    // Option 1: Trả về null
+                    Console.WriteLine("No exist product with pid, sizeid, colorid");
+                    return false;
+
+                    // Option 2: Throw an exception
+                    // throw new Exception("CommonId not found for the given product details.");
+                }
+
+                Cart cart = ctx.Carts
+                               .FirstOrDefault(c => c.CommonId == commonId.Value && c.Username.Equals(username));
+
+                var stockRecord = ctx.SizeColorStocks
+                  .Where(x => x.CommonId == cart.CommonId)
+                  .FirstOrDefault();
+
+                int stock = (int)(stockRecord != null ? stockRecord.QuantityStock : 0);
+                if (stock == 0)
+                {
+                    Console.WriteLine("This product quantity = 0");
+                    return false;
+                }
+                if (quantity > stock)
+                {
+                    Console.WriteLine("Not enough to sale");
+                    return false;
+                }
+
+                // Nếu tìm thấy, trả về instance đó
+                if (cart != null)
+                {
+                    cart.Amount = cart.Amount + quantity;
+                    ctx.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    Cart newCart = new Cart
+                    {
+                        CommonId = commonId.Value,
+                        Username = username,
+                        CreateAt = DateTime.Now.ToString(),
+                        Amount = quantity,
+                    };
+                    ctx.Carts.Add(newCart);
+                    return true;
+                }
+            }
+        }
+
     }
 }

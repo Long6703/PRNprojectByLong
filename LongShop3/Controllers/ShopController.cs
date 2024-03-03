@@ -5,6 +5,7 @@ using LongShop3.Services;
 using Microsoft.AspNetCore.Mvc;
 using LongShop3.Controllers.Authen;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace LongShop3.Controllers
 {
@@ -70,8 +71,43 @@ namespace LongShop3.Controllers
             ProductWithImageColor pic = _productServicecs.GetProductDetail(Id, Color);
             Product_Brand_Cate product_Brand_Cate = _productServicecs.GetProductDetailInfor(Id);
             ViewBag.infor = product_Brand_Cate;
+            List<Models.Color> colors = _productServicecs.getcolorsbypdid(Id);
+            ViewBag.colors = colors;
+            List<Models.Size> sizes = _productServicecs.GetSizesByProductIdAndColorId(Id, Color); 
+            ViewBag.sizes = sizes;
             return View("~/Views/Shop-single.cshtml", pic);
+        }
 
+        [Route("/doshopping")]
+        public IActionResult DoShopping(int pdid, int colorid, string sizename, int quanity)
+        {
+            string buttonValue = Request.Form["submit"];
+            if(buttonValue.Equals("buy"))
+            {
+                return View("~/Views/Buying.cshtml");
+            }
+
+            if (buttonValue.Equals("addtocard"))
+            {
+                ViewBag.Addsucess = false;
+                SHOPLONG5Context context = new SHOPLONG5Context();
+                if("".Equals(sizename))
+                {
+                    return View("Error");
+                }
+                Models.Size size = context.Sizes.FirstOrDefault(x => x.SizeName.Equals(sizename));
+                int sizeid = 0;
+                if(size != null)
+                {
+                    sizeid = size.SizeId;
+                }
+                Console.WriteLine($"pid = {pdid}, colorid ; {colorid}, sizename : {sizename}, quantity : {quanity}");
+                _productServicecs.AddtoCart(pdid, colorid, sizeid, quanity, "longnk");
+                ViewBag.Addsucess = true;
+                return Redirect($"productdetail?Id={pdid}&Color={colorid}&AddSuccess=true");
+            }
+
+            return View("Error");
         }
     }
 }

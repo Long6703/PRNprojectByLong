@@ -21,6 +21,13 @@ namespace LongShop3.Controllers
             return View("~/Views/Login.cshtml");
         }
 
+        [Route("/logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("user");
+            return Redirect("home");
+        }
+
         [Route("/dologin")]
         public IActionResult doLogin(string username, string pass)
         {
