@@ -42,6 +42,7 @@
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
+            color:black;
         }
 
         th {
@@ -295,10 +296,10 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Admin Name :  </h1>
+                    <h1 class="h3 mb-4 text-gray-800">Admin Name :  @ViewBag.Username</h1>
                     <form action="addnewbrand" >
                         <div style="display:flex; gap:20px">
-                            <h5 style="color:black"><a href="#">Enter name new brand</a></h5>
+                            <h5 style="color:black">Enter name new brand</h5>
                             <input type="text" name="newbrand" />
                             <button type="submit">Add</button>
                             <h1>@ViewBag.Err</h1>
@@ -314,13 +315,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach(var b in Model)
+                            @foreach(var br in Model)
                             {
                                 <tr>
-                                    <td>@b.BrandId</td>
-                                    <td>@b.BrandName</td>
-                                    <td>@(b.IsActive == true ? "YES" : "NO")</td>
-                                    <td><a href="editbrand?ID=@b.BrandId">Edit</a></td>
+                                    <td>@br.BrandId</td>
+                                    <td>@br.BrandName</td>
+                                    <td>@(br.IsActive == true ? "YES" : "NO")</td>
+                                    <td><a href="editbrand?ID=@br.BrandId">Edit</a></td>
                                 </tr>
                             }
                         </tbody>

@@ -58,8 +58,6 @@ namespace LongShop3.Repositories
             return null;
         }
 
-        
-
         public List<ProductWithImageColor> SearchByName(string? name)
         {
             if (name == null)
@@ -127,9 +125,43 @@ namespace LongShop3.Repositories
             return list.Count();
         }
 
-        public List<ProductWithImageColor> GetAllProductForAdmin(int categoryId, int brandId, string sort, int offset, int count)
+        public List<ProductDetail> GetAllProductForAdmin(int CategoryId, int BrandId, string sort, int offset, int count, string status)
         {
-            return null;
+            SHOPLONG5Context context = new SHOPLONG5Context();
+            var query = context.ProductDetails.AsQueryable(); // Bắt đầu với truy vấn LINQ
+
+            if (CategoryId != 0)
+            {
+                query = query.Where(x => x.CategoryId == CategoryId);
+            }
+
+            if (BrandId != 0)
+            {
+                query = query.Where(x => x.BrandId == BrandId);
+            }
+
+            if ("asc".Equals(sort))
+            {
+                query = query.OrderBy(x => x.Price);
+            }
+            else if ("desc".Equals(sort))
+            {
+                query = query.OrderByDescending(x => x.Price);
+            }
+
+            if ("true".Equals(status))
+            {
+                query = query.Where(x => x.IsActive == true);
+            }
+            else if ("false".Equals(status))
+            {
+                query = query.Where(x => x.IsActive == false);
+            }
+
+            var paginatedResult = query.Skip(offset).Take(count).ToList();
+
+            return paginatedResult;
+
         }
 
         public Product_Brand_Cate GetProductDetailInfor(int id)

@@ -17,7 +17,6 @@ namespace LongShop3.Controllers
             _cateServices = cateServices;
         }
 
-
         [Route("/home")]
         public IActionResult Index()
         {
@@ -35,6 +34,12 @@ namespace LongShop3.Controllers
         public IActionResult Contact()
         {
             return View("~/Views/Contact.cshtml");
+        }
+
+        [Route("/accessdenied")]
+        public IActionResult accessdenied()
+        {
+            return View("~/Views/AccessDenied.cshtml");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

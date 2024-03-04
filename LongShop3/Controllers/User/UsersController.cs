@@ -1,4 +1,5 @@
 ﻿using LongShop3.Models;
+using LongShop3.Services.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -7,6 +8,13 @@ namespace LongShop3.Controllers.Users
 {
     public class UsersController : Controller
     {
+        private readonly IProductServicecs _productServicecs;
+
+        public UsersController(IProductServicecs productServicecs)
+        {
+            _productServicecs = productServicecs;
+        }
+
         [Route("/userprofile")]
         public IActionResult UserProfile()
         {
@@ -91,5 +99,38 @@ namespace LongShop3.Controllers.Users
         {
             return View("~/Views/Changepassword.cshtml");
         }
+
+        [Route("/doshopping")]
+        public IActionResult DoShopping(int pdid, int colorid, string sizename, int quanity)
+        {
+            string buttonValue = Request.Form["submit"];
+            if (buttonValue.Equals("buy"))
+            {
+                return View("~/Views/Buying.cshtml");
+            }
+
+            if (buttonValue.Equals("addtocard"))
+            {
+                ViewBag.Addsucess = false;
+                SHOPLONG5Context context = new SHOPLONG5Context();
+                if ("".Equals(sizename))
+                {
+                    return View("Error");
+                }
+                Models.Size size = context.Sizes.FirstOrDefault(x => x.SizeName.Equals(sizename));
+                int sizeid = 0;
+                if (size != null)
+                {
+                    sizeid = size.SizeId;
+                }
+                Console.WriteLine($"pid = {pdid}, colorid ; {colorid}, sizename : {sizename}, quantity : {quanity}");
+                _productServicecs.AddtoCart(pdid, colorid, sizeid, quanity, "longnk");
+                ViewBag.Addsucess = true;
+                return Redirect($"productdetail?Id={pdid}&Color={colorid}&AddSuccess=true");
+            }
+
+            return View("Error");
+        }
     }
 }
+

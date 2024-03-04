@@ -1,9 +1,12 @@
-﻿using LongShop3.Models;
+﻿using LongShop3.Controllers.Authen;
+using LongShop3.Models;
 using LongShop3.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace LongShop3.Controllers.Admin
 {
+    [AuthenClass]
     public class AdminBrandController : Controller
     {
         private readonly IBrandService _brandService;
@@ -14,10 +17,12 @@ namespace LongShop3.Controllers.Admin
         }
 
 
-
         [Route("/managebrands")]
         public IActionResult ManageBrands()
         {
+            var userJson = HttpContext.Session.GetString("user");
+            var user = JsonSerializer.Deserialize<User>(userJson);
+            ViewBag.Username = user.DisplayName;
             List<Brand> brands = _brandService.GetBrandsForAdmin();
             return View("~/Views/managebrands.cshtml", brands);
         }

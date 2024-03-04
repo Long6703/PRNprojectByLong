@@ -21,9 +21,6 @@ namespace LongShop3.Controllers
         [Route("/shop")]
         public IActionResult Shop(int CategoryId, int BrandId, string sort, int page = 1)
         {
-            ViewBag.CategoryId = CategoryId;
-            ViewBag.BrandId = BrandId;
-            ViewBag.Sort = sort;
 
             if (page <= 0)
             {
@@ -55,7 +52,7 @@ namespace LongShop3.Controllers
         [Route("/searchbyname")]
         public IActionResult SearchbyName(string name)
         {
-            if(name == null)
+            if (name == null)
             {
                 return RedirectToAction("/shop");
             }
@@ -73,41 +70,10 @@ namespace LongShop3.Controllers
             ViewBag.infor = product_Brand_Cate;
             List<Models.Color> colors = _productServicecs.getcolorsbypdid(Id);
             ViewBag.colors = colors;
-            List<Models.Size> sizes = _productServicecs.GetSizesByProductIdAndColorId(Id, Color); 
+            List<Models.Size> sizes = _productServicecs.GetSizesByProductIdAndColorId(Id, Color);
             ViewBag.sizes = sizes;
             return View("~/Views/Shop-single.cshtml", pic);
         }
 
-        [Route("/doshopping")]
-        public IActionResult DoShopping(int pdid, int colorid, string sizename, int quanity)
-        {
-            string buttonValue = Request.Form["submit"];
-            if(buttonValue.Equals("buy"))
-            {
-                return View("~/Views/Buying.cshtml");
-            }
-
-            if (buttonValue.Equals("addtocard"))
-            {
-                ViewBag.Addsucess = false;
-                SHOPLONG5Context context = new SHOPLONG5Context();
-                if("".Equals(sizename))
-                {
-                    return View("Error");
-                }
-                Models.Size size = context.Sizes.FirstOrDefault(x => x.SizeName.Equals(sizename));
-                int sizeid = 0;
-                if(size != null)
-                {
-                    sizeid = size.SizeId;
-                }
-                Console.WriteLine($"pid = {pdid}, colorid ; {colorid}, sizename : {sizename}, quantity : {quanity}");
-                _productServicecs.AddtoCart(pdid, colorid, sizeid, quanity, "longnk");
-                ViewBag.Addsucess = true;
-                return Redirect($"productdetail?Id={pdid}&Color={colorid}&AddSuccess=true");
-            }
-
-            return View("Error");
-        }
     }
 }

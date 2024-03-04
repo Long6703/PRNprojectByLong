@@ -24,6 +24,7 @@ namespace LongShop3.Controllers
         [Route("/logout")]
         public IActionResult Logout()
         {
+            HttpContext.Session.Remove("Authenticated");
             HttpContext.Session.Remove("user");
             return Redirect("home");
         }
@@ -37,6 +38,7 @@ namespace LongShop3.Controllers
                 return Redirect("/login");
             }
             var serializedUser = JsonSerializer.Serialize(u);
+            HttpContext.Session.SetString("Authenticated", "true");
             HttpContext.Session.SetString("user", serializedUser);
             return Redirect("/home");
         }

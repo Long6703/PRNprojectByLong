@@ -13,5 +13,6 @@ namespace LongShop3.Services.IServices
         List<Brand> GetBrandsForAdmin();
 
         void UpdateBrand(Brand brand);
+
     }
 }

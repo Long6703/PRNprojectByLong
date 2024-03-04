@@ -1,9 +1,12 @@
-﻿using LongShop3.Models;
+﻿using LongShop3.Controllers.Authen;
+using LongShop3.Models;
 using LongShop3.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace LongShop3.Controllers.Admin
 {
+    
     public class AdminCateController : Controller
     {
         private readonly ICateServices _cateservice;
@@ -16,6 +19,9 @@ namespace LongShop3.Controllers.Admin
         [Route("/managecate")]
         public IActionResult ManageCategories()
         {
+            var userJson = HttpContext.Session.GetString("user");
+            var user = JsonSerializer.Deserialize<User>(userJson);
+            ViewBag.Username = user.DisplayName;
             List<Category> categories = _cateservice.GetAllCateForAdmin();
             return View("~/Views/managecate.cshtml", categories);
         }
