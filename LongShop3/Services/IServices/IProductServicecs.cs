@@ -13,6 +13,6 @@ namespace LongShop3.Services.IServices
         public Product_Brand_Cate GetProductDetailInfor(int Id);
         List<Color> getcolorsbypdid(int productid);
         public List<Size> GetSizesByProductIdAndColorId(int productId, int colorId);
-        public void AddtoCart(int pid, int cid, int sid, int quantity, string username);
+        public bool AddtoCart(int pid, int cid, int sid, int quantity, string username);
     }
 }

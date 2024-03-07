@@ -13,7 +13,7 @@ namespace LongShop3.Services
             _brands = brandRepocs;
         }
 
-        public void AddBrand(Brand brand)
+        public void AddBrand(Brand brand) 
         {
             _brands.createBrands(brand);
         }

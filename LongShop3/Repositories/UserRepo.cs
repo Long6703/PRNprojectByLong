@@ -35,6 +35,12 @@ namespace LongShop3.Repositories
                         return false;
                     }
                     _context.Users.Add(user);
+                    GroupAccount ga = new GroupAccount();
+                    ga.Username = user.Username;
+                    ga.GroupId = 1;
+                    string test = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                    ga.Createat = test;
+                    _context.GroupAccounts.Add(ga);
                     _context.SaveChanges();
                     return true;
                 }

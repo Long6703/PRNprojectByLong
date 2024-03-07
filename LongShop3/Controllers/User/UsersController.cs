@@ -33,9 +33,10 @@ namespace LongShop3.Controllers.Users
             var userJson = HttpContext.Session.GetString("user");
             var user = JsonSerializer.Deserialize<User>(userJson);
             SHOPLONG5Context sHOPLONG5Context = new SHOPLONG5Context();
+            var usergetdb = sHOPLONG5Context.Users.FirstOrDefault(x => x.Username == user.Username);
             List<Address> addresses = sHOPLONG5Context.Addresses.Where(x => x.Username.Equals(user.Username)).ToList();
             ViewBag.Address = addresses;
-            return View("~/Views/EditProfile.cshtml", user);
+            return View("~/Views/EditProfile.cshtml", usergetdb);
         }
 
         [Route("/addnewaddress")]
@@ -112,11 +113,9 @@ namespace LongShop3.Controllers.Users
             if (buttonValue.Equals("addtocard"))
             {
                 ViewBag.Addsucess = false;
+                var userJson = HttpContext.Session.GetString("user");
+                var user = JsonSerializer.Deserialize<User>(userJson);
                 SHOPLONG5Context context = new SHOPLONG5Context();
-                if ("".Equals(sizename))
-                {
-                    return View("Error");
-                }
                 Models.Size size = context.Sizes.FirstOrDefault(x => x.SizeName.Equals(sizename));
                 int sizeid = 0;
                 if (size != null)
@@ -124,12 +123,47 @@ namespace LongShop3.Controllers.Users
                     sizeid = size.SizeId;
                 }
                 Console.WriteLine($"pid = {pdid}, colorid ; {colorid}, sizename : {sizename}, quantity : {quanity}");
-                _productServicecs.AddtoCart(pdid, colorid, sizeid, quanity, "longnk");
-                ViewBag.Addsucess = true;
-                return Redirect($"productdetail?Id={pdid}&Color={colorid}&AddSuccess=true");
+                if (_productServicecs.AddtoCart(pdid, colorid, sizeid, quanity, user.Username))
+                {
+                    ViewBag.Addsucess = true;
+                }
+                return Redirect($"productdetail?Id={pdid}&Color={colorid}&AddSuccess="+ViewBag.Addsucess);
             }
 
             return View("Error");
+        }
+
+        [Route("/upload_avatar")]
+        [HttpPost]
+        public async Task<IActionResult> Upload_avatarAsync(string username, IFormFile avatar)
+        {
+            if (avatar == null || avatar.Length == 0)
+            {
+                return Redirect("editprofile");
+            }
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+            var filename = username + "_" + avatar.FileName;
+            var filePath = Path.Combine(uploadsFolder, filename);
+            Console.WriteLine("uploadsFolder " + uploadsFolder);
+            Console.WriteLine("filePath : " + filePath);
+            Console.WriteLine("username : " + username);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await avatar.CopyToAsync(stream);
+            }
+            SHOPLONG5Context context = new SHOPLONG5Context();
+            var currentuser = context.Users.FirstOrDefault(x => x.Username == username);
+            if (currentuser != null)
+            {
+                currentuser.AvatarUrl = filename;
+                context.Update(currentuser);
+                context.SaveChanges();
+            }
+            return Redirect("editprofile");
         }
     }
 }

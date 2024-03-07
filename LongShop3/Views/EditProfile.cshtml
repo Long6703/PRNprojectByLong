@@ -98,7 +98,7 @@
             <div class="navbar-right">
                 <!-- Các option khác có thể được bổ xung ở đây -->
                 <a href="editprofile">Edit profile</a>
-                <a href="#">Change password</a>
+                <a href="changepass">Change password</a>
                 <a href="#">Order history</a>
                 <a href="viewcart">View Cart</a>
             </div>
@@ -107,9 +107,18 @@
 
     <div class="profile-container">
         <div class="avatar">
-            <!-- Ở đây bạn có thể đặt ảnh đại diện của người dùng -->
-            <img src="~/img/p284.png" alt="Avatar">
-            <a style="padding:20px;text-decoration:none" href="#">Change avatar</a>
+            <div class="avatar">
+                <img src="@(Model.AvatarUrl != null ? Url.Content("~/img/" + Model.AvatarUrl) : Url.Content("~/img/no_avatar.jpg"))" alt="Avatar">
+            </div>
+            <a style="padding:20px;text-decoration:none" href="#">
+                <form action="upload_avatar" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="username" value="@Model.Username" />
+                    <div class="form-group">
+                        <input type="file" class="form-control-file" id="avatar" name="avatar">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+            </a>
         </div>
 
 

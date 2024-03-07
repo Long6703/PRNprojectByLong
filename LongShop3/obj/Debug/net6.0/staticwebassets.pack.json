@@ -57,6 +57,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\687987 (1).jpg",
+      "PackagePath": "staticwebassets\\img\\687987 (1).jpg"
+    },
+    {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\about-hero.svg",
       "PackagePath": "staticwebassets\\img\\about-hero.svg"
     },
@@ -123,6 +127,14 @@
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\glasses.jpg",
       "PackagePath": "staticwebassets\\img\\glasses.jpg"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\longbeo_raza_a_boy_flying_in_the_air_carrying_his_dog_on_his_back_and_t_03878b46-0464-41d0-b574-a453bdb651f9.png",
+      "PackagePath": "staticwebassets\\img\\longbeo_raza_a_boy_flying_in_the_air_carrying_his_dog_on_his_back_and_t_03878b46-0464-41d0-b574-a453bdb651f9.png"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\no_avatar.jpg",
+      "PackagePath": "staticwebassets\\img\\no_avatar.jpg"
     },
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\p111.jpg",

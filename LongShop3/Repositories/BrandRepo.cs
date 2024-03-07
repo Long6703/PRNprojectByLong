@@ -7,9 +7,10 @@ namespace LongShop3.Repositories
     {
         public List<Brand> GetAllBrands()
         {
-            SHOPLONG5Context context = new SHOPLONG5Context();
+            using(SHOPLONG5Context context = new SHOPLONG5Context()){
             var listbrand = context.Brands.Where(x => x.IsActive == true).ToList();
-            return listbrand;
+                return listbrand;
+            }
         }
 
         public void createBrands(Brand brand)

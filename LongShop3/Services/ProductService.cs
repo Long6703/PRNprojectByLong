@@ -14,9 +14,9 @@ namespace LongShop3.Services
             _repo = repo;
         }
 
-        public void AddtoCart(int pid, int cid, int sid, int quantity, string username)
+        public bool AddtoCart(int pid, int cid, int sid, int quantity, string username)
         {
-            _repo.AddtoCartRepo(pid, cid, sid, quantity, username);
+            return _repo.AddtoCartRepo(pid, cid, sid, quantity, username);
         }
 
         public List<ProductWithImageColor> GetAllProduct(int CategoryId, int BrandId, string sort, int offset, int count)

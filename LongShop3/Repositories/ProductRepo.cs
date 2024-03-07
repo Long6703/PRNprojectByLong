@@ -217,63 +217,46 @@ namespace LongShop3.Repositories
             }
         }
 
-        public void AddtoCartRepo(int pid, int cid, int sid, int quantity, string username)
+        public bool AddtoCartRepo(int pid, int cid, int sid, int quantity, string username)
         {
-            bool check = GetOrCreateCart(pid, cid, sid, username, quantity);
-            if(check == true)
-            {
-                Console.WriteLine("Add suecess");
-            }
-            Console.WriteLine("Fail");
+            return GetOrCreateCart(pid, cid, sid, username, quantity);
         }
 
         private bool GetOrCreateCart(int pid, int cid, int sid, string username, int quantity)
         {
             using (var ctx = new SHOPLONG5Context())
             {
-                int? commonId = ctx.SizeColorStocks
-                                  .Where(x => x.ProductDetailId == pid && x.ColorId == cid && x.SizeId == sid)
-                                  .Select(x => x.CommonId)
-                                  .FirstOrDefault();
+                var query = ctx.SizeColorStocks.Where(x => x.ProductDetailId == pid && x.ColorId == cid);
+                if (sid != 0)
+                {
+                    query = query.Where(x => x.SizeId == sid);
+                }
+                else
+                {
+                    query = query.Where(x => x.SizeId == null);
+                }
+
+                int? commonId = query.Select(x => x.CommonId).FirstOrDefault();
 
                 if (!commonId.HasValue)
                 {
-                    // Option 1: Trả về null
-                    Console.WriteLine("No exist product with pid, sizeid, colorid");
+                    Console.WriteLine("No existing product with the given product details (pid, cid, sid).");
                     return false;
-
-                    // Option 2: Throw an exception
-                    // throw new Exception("CommonId not found for the given product details.");
                 }
 
                 Cart cart = ctx.Carts
                                .FirstOrDefault(c => c.CommonId == commonId.Value && c.Username.Equals(username));
 
-                var stockRecord = ctx.SizeColorStocks
-                  .Where(x => x.CommonId == cart.CommonId)
-                  .FirstOrDefault();
-
-                int stock = (int)(stockRecord != null ? stockRecord.QuantityStock : 0);
-                if (stock == 0)
-                {
-                    Console.WriteLine("This product quantity = 0");
-                    return false;
-                }
-                if (quantity > stock)
-                {
-                    Console.WriteLine("Not enough to sale");
-                    return false;
-                }
-
-                // Nếu tìm thấy, trả về instance đó
+ 
                 if (cart != null)
                 {
-                    cart.Amount = cart.Amount + quantity;
+                    cart.Amount += quantity;
                     ctx.SaveChanges();
                     return true;
                 }
                 else
                 {
+
                     Cart newCart = new Cart
                     {
                         CommonId = commonId.Value,
@@ -282,10 +265,10 @@ namespace LongShop3.Repositories
                         Amount = quantity,
                     };
                     ctx.Carts.Add(newCart);
+                    ctx.SaveChanges();
                     return true;
                 }
             }
         }
-
     }
 }

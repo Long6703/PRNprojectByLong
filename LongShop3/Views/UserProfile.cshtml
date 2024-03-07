@@ -108,9 +108,7 @@
 
     <div class="profile-container">
         <div class="avatar">
-            <!-- Ở đây bạn có thể đặt ảnh đại diện của người dùng -->
-            <img src="~/img/p284.png" alt="Avatar">
-            <a style="padding:20px;text-decoration:none" href="#">Change avatar</a>
+            <img src="@(Model.AvatarUrl != null ? Url.Content("~/img/" + Model.AvatarUrl) : Url.Content("~/img/no_avatar.jpg"))" alt="Avatar">
         </div>
         <div class="profile-info">
             <h2>@Model.DisplayName</h2>
@@ -128,6 +126,5 @@
             </ul>
         </div>
     </div>
-    
 </body>
 </html>

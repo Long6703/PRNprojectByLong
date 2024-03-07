@@ -7,6 +7,7 @@ using System.Text.Json;
 
 namespace LongShop3.Controllers.Admin
 {
+    [AuthenClass]
     public class AdminProductController : Controller
     {
         private readonly IProductServicecs _productServicecs;
@@ -48,7 +49,7 @@ namespace LongShop3.Controllers.Admin
         }
 
         [Route("/searchbyname_admin")]
-        public IActionResult DetailProduct(string name)
+        public IActionResult SearchProduct(string name)
         {
             if(name == "")
             {
@@ -58,6 +59,13 @@ namespace LongShop3.Controllers.Admin
             List<ProductDetail> list = context.ProductDetails.ToList();
             list = list.Where(x => x.ProductName.Contains(name)).ToList();
             return View("~/Views/manageproduct.cshtml", list);
+        }
+
+        [Route("/detailproductforadmin")]
+        public IActionResult DetailProduct(int ProductDetailId)
+        {
+
+            return View("~/Views/DetailProduct.cshtml");
         }
     }
 }
