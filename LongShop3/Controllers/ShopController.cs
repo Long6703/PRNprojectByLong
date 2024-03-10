@@ -39,13 +39,12 @@ namespace LongShop3.Controllers
             {
                 totalpage = 1;
             }
-
+            
             ViewBag.totalpage = totalpage;
             ViewBag.currentpage = page;
             ViewBag.CategoryId = CategoryId;
             ViewBag.BrandId = BrandId;
             ViewBag.sort = sort;
-
             return View("~/Views/Shop.cshtml", listproduct);
         }
 

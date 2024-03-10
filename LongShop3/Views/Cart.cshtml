@@ -2,6 +2,16 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    @using LongShop3.Models
+    @using System.Text.Json;
+    @model List<Product_Size_Color_Stock>
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+    var userJson = HttpContextAccessor.HttpContext.Session.GetString("user");
+    var user = JsonSerializer.Deserialize<User>(userJson);
+    if (!string.IsNullOrEmpty(userJson))
+    {
+        user = JsonSerializer.Deserialize<User>(userJson);
+    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +30,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            height: 75vh;
+            height: 100vh;
             padding: 20px;
             margin : auto 300px;
         }
@@ -74,7 +84,7 @@
             width: 100%;
             padding: 10px;
             text-align: center;
-            background-color: #007bff;
+            background-color: #59ab6e;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -85,39 +95,78 @@
 </head>
 <body>
     @Html.Partial("~/Views/Navbar.cshtml")
-    <div class="cart-container">
-        <div class="cart-column">
-            <div class="cart-item">
-                <img src="~/img/p162.jpg" alt="Product Image" class="cart-item-image">
-                <div class="cart-item-details">
-                    <h3 class="cart-item-name">Product Name</h3>
-                    <p class="cart-item-price">$100</p>
-                    <p>Size: M</p>
-                    <p>Color: Blue</p>
-                    <input type="number" value="1" min="1">
-                </div>
+    <form action="completeorderincart" method="get">
+        <div class="cart-container">
+            <div class="cart-column">
+                @foreach (var infor in Model)
+                {
+                    var firstImage = infor.images.FirstOrDefault();
+                    <div class="cart-item">
+                        <img src="~/img/@firstImage.ImageUrl" alt="Product Image" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <h3 class="cart-item-name">@infor.pd.ProductName @infor.color.ColorName @infor.pd.ProductDetailId</h3>
+                            <p class="cart-item-price">$@infor.pd.Price</p>
+                            <p>Size: @infor.size.SizeName</p>
+                            <p>Color: @infor.color.ColorName</p>
+                            <input name="amount" type="number" value="@infor.cart.Amount" max="@infor.scs.QuantityStock" min="1" class="cart-item-quantity">
+                            <a style="text-decoration:none" href="deletecart?cartid=@infor.cart.Cartid">Delete</a>
+                            <input type="hidden" name="commonid" value="@infor.scs.CommonId" />
+                        </div>
+                    </div>
+                }
             </div>
-            <div class="cart-item">
-                <img src="~/img/p112.jpg" alt="Product Image" class="cart-item-image">
-                <div class="cart-item-details">
-                    <h3 class="cart-item-name">Another Product Name</h3>
-                    <p class="cart-item-price">$150</p>
-                    <p>Size: L</p>
-                    <p>Color: Red</p>
-                    <input type="number" value="1" min="1">
+            <div class="cart-column">
+                <div style="margin-bottom:50px" class="cart-summary">
+                    <h2>Customer information</h2>
+                    <p>Name: @user.DisplayName</p>
+                    <p>Phone Number: @user.PhoneNumber</p>
+                    <p>Email: @user.Email</p>
+                    <p>
+                        Location Shipping :
+                        <select name="location_shipping">
+                            @foreach (var a in ViewBag.Address)
+                            {
+                                <option value="@a.AddressId">@a.AddressName</option>
+                            }
+                        </select>
+                    </p>
+                </div>
+                <div class="cart-summary">
+                    <h2>Cart Summary</h2>
+                    <p>Subtotal: $<span id="subtotal">0</span></p>
+                    <p>Shipping: $10</p>
+                    <p class="cart-total">Total: $<span id="total">0</span></p>
+                    <input type="hidden" id="totalHidden" name="totalprice" value="">
+                    <button class="cart-checkout-button">Complete order</button>
                 </div>
             </div>
         </div>
-        <div class="cart-column">
-            <div class="cart-summary">
-                <h2>Cart Summary</h2>
-                <p>Subtotal: $250</p>
-                <p>Shipping: $10</p>
-                <p class="cart-total">Total: $260</p>
-                <button class="cart-checkout-button">Checkout</button>
-            </div>
-        </div>
-    </div>
+    </form>
     @Html.Partial("~/Views/footer.cshtml")
+    <script>
+        function updateCartSummary() {
+            var subtotal = 0;
+            var quantityInputs = document.querySelectorAll('.cart-item-quantity');
+            quantityInputs.forEach(function (input) {
+                var price = parseFloat(input.closest('.cart-item').querySelector('.cart-item-price').innerText.replace('$', ''));
+                var quantity = parseInt(input.value);
+                subtotal += price * quantity;
+            });
+            var shipping = 10;
+            var total = subtotal + shipping;
+
+            document.getElementById('subtotal').innerText = subtotal.toFixed(2);
+            document.getElementById('total').innerText = total.toFixed(2);
+            document.getElementById('totalHidden').value = total.toFixed(2);
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            updateCartSummary();
+            var quantityInputs = document.querySelectorAll('.cart-item-quantity');
+            quantityInputs.forEach(function (input) {
+                input.addEventListener('input', updateCartSummary);
+            });
+        });
+    </script>
 </body>
 </html>

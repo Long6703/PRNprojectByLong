@@ -15,7 +15,9 @@ namespace LongShop3.Models
         public decimal TotalPrice { get; set; }
         public string StatusOrder { get; set; } = null!;
         public string OrderDate { get; set; } = null!;
+        public int Addressid { get; set; }
 
+        public virtual Address Address { get; set; } = null!;
         public virtual User UsernameNavigation { get; set; } = null!;
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }

@@ -2,6 +2,7 @@
 using LongShop3.Services.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace LongShop3.Controllers.Users
@@ -9,10 +10,12 @@ namespace LongShop3.Controllers.Users
     public class UsersController : Controller
     {
         private readonly IProductServicecs _productServicecs;
+        private readonly IOrderService _orderService;
 
-        public UsersController(IProductServicecs productServicecs)
+        public UsersController(IProductServicecs productServicecs, IOrderService orderService)
         {
             _productServicecs = productServicecs;
+            _orderService = orderService;
         }
 
         [Route("/userprofile")]
@@ -20,6 +23,10 @@ namespace LongShop3.Controllers.Users
         {
             var userJson = HttpContext.Session.GetString("user");
             var user = JsonSerializer.Deserialize<User>(userJson);
+            foreach (var item in user.Addresses)
+            {
+                Console.WriteLine(item.AddressName);
+            }
             SHOPLONG5Context sHOPLONG5Context = new SHOPLONG5Context();
             List<Address> addresses = sHOPLONG5Context.Addresses.Where(x => x.Username.Equals(user.Username)).ToList();
             ViewBag.Address = addresses;
@@ -107,22 +114,57 @@ namespace LongShop3.Controllers.Users
             string buttonValue = Request.Form["submit"];
             if (buttonValue.Equals("buy"))
             {
-                return View("~/Views/Buying.cshtml");
+                ViewBag.selling = true;
+                ViewBag.err = true;
+                var userJson = HttpContext.Session.GetString("user");
+                var user = JsonSerializer.Deserialize<User>(userJson);
+                using(SHOPLONG5Context context = new SHOPLONG5Context())
+                {
+                    List<Address> list = context.Addresses.Where(x => x.Username == user.Username).ToList();
+                    ViewBag.Address = list;
+                    Size s = context.Sizes.FirstOrDefault(x => x.SizeName == sizename);
+                    if(s == null)
+                    {
+                        ViewBag.err = false;
+                        return Redirect($"productdetail?Id={pdid}&Color={colorid}&err=" + ViewBag.err);
+                    }
+                    int sid = s.SizeId;
+                    SizeColorStock scs = context.SizeColorStocks.FirstOrDefault(x => x.ProductDetailId == pdid && x.SizeId == sid && x.ColorId == colorid);
+                    Console.WriteLine(scs.CommonId);
+                    if (quanity > scs.QuantityStock)
+                    {
+                        ViewBag.selling = false;
+                        return Redirect($"productdetail?Id={pdid}&Color={colorid}&Addselling=" + ViewBag.selling);
+                    }
+                    ViewBag.quantity = quanity;
+                    Product_Size_Color_Stock productinfor = _orderService.getProductinfor(scs.CommonId);
+                    return View("~/Views/Buying.cshtml", productinfor);
+                }
             }
 
             if (buttonValue.Equals("addtocard"))
             {
                 ViewBag.Addsucess = false;
+                ViewBag.selling = true;
+                ViewBag.err = true;
                 var userJson = HttpContext.Session.GetString("user");
                 var user = JsonSerializer.Deserialize<User>(userJson);
                 SHOPLONG5Context context = new SHOPLONG5Context();
                 Models.Size size = context.Sizes.FirstOrDefault(x => x.SizeName.Equals(sizename));
-                int sizeid = 0;
-                if (size != null)
+                if (size == null)
                 {
-                    sizeid = size.SizeId;
+                    ViewBag.err = false;
+                    return Redirect($"productdetail?Id={pdid}&Color={colorid}&err=" + ViewBag.err);
                 }
+                int sizeid = size.SizeId;
                 Console.WriteLine($"pid = {pdid}, colorid ; {colorid}, sizename : {sizename}, quantity : {quanity}");
+                SizeColorStock scs = context.SizeColorStocks.FirstOrDefault(x => x.ProductDetailId == pdid && x.SizeId == sizeid && x.ColorId == colorid);
+                Console.WriteLine(scs.CommonId);
+                if (quanity > scs.QuantityStock)
+                {
+                    ViewBag.selling = false;
+                    return Redirect($"productdetail?Id={pdid}&Color={colorid}&Addselling=" + ViewBag.selling);
+                }
                 if (_productServicecs.AddtoCart(pdid, colorid, sizeid, quanity, user.Username))
                 {
                     ViewBag.Addsucess = true;
@@ -146,7 +188,9 @@ namespace LongShop3.Controllers.Users
             {
                 Directory.CreateDirectory(uploadsFolder);
             }
-            var filename = username + "_" + avatar.FileName;
+            Guid uniqueGuid = Guid.NewGuid();
+            string uniqueString = uniqueGuid.ToString();
+            var filename = username + "_" + avatar.FileName + "_" + uniqueString;
             var filePath = Path.Combine(uploadsFolder, filename);
             Console.WriteLine("uploadsFolder " + uploadsFolder);
             Console.WriteLine("filePath : " + filePath);

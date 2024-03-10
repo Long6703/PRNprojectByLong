@@ -64,7 +64,9 @@ namespace LongShop3.Controllers.Admin
         [Route("/detailproductforadmin")]
         public IActionResult DetailProduct(int ProductDetailId)
         {
-
+            var userJson = HttpContext.Session.GetString("user");
+            var user = JsonSerializer.Deserialize<User>(userJson);
+            ViewBag.Username = user.Username;
             return View("~/Views/DetailProduct.cshtml");
         }
     }

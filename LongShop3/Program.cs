@@ -19,15 +19,21 @@ namespace LongShop3
             builder.Services.AddSingleton<IBrandRepocs, BrandRepo>();
             builder.Services.AddSingleton<IBrandService, BrandServies>();
 
-            builder.Services.AddSingleton<ICate, CateRepo>();
+            builder.Services.AddSingleton<ICate, Repositories.CateRepo>();
             builder.Services.AddSingleton<ICateServices, CateServices>();
 
             builder.Services.AddSingleton<IProductRepo, ProductRepo>();
             builder.Services.AddSingleton<IProductServicecs, ProductService>();
 
             builder.Services.AddSingleton<IUserRepo, UserRepo>();
-            builder.Services.AddSingleton<IUserServices, UserServices>();
-            
+            builder.Services.AddSingleton<IUserServices, Services.CateRepo>();
+
+            builder.Services.AddSingleton<ICartService, CartService>();
+            builder.Services.AddSingleton<ICartRepo, CartRepo>();
+
+            builder.Services.AddSingleton<IOrderService, OrderService>();
+            builder.Services.AddSingleton<IOrderRepo, OrderRepo>();
+
             builder.Services.AddSession();
             var app = builder.Build();
 

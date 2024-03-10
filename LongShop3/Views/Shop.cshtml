@@ -6,8 +6,11 @@
     @using LongShop3.Models;
     @inject ICateServices cate;
     @inject IBrandService brands;
+    @inject IProductServicecs prouducts;
     var listcate = cate.GetAllCate();
     var listbrand = brands.GetBrands();
+    var listcolor = prouducts.getAllColor();
+    var listSize = prouducts.GetSizeList();
     @model List<ProductWithImageColor>
 
 }

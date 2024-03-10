@@ -2,6 +2,16 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    @using LongShop3.Models;
+    @using System.Text.Json;
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+    var userJson = HttpContextAccessor.HttpContext.Session.GetString("user");
+    var user = JsonSerializer.Deserialize<User>(userJson);
+    @model Product_Size_Color_Stock
+    if (!string.IsNullOrEmpty(userJson))
+    {
+        user = JsonSerializer.Deserialize<User>(userJson);
+    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -16,74 +26,147 @@
             padding: 0;
         }
 
-        .buying-container {
+        .cart-container {
             display: flex;
             justify-content: center;
             align-items: flex-start;
             height: 100vh;
             padding: 20px;
-            margin: auto 300px;
+            margin : auto 300px;
         }
 
-        .buying-column {
+        .cart-column {
             flex: 1;
             padding: 20px;
-            
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: auto;
+        }
+
+        .cart-item-details {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+        }
+
+        .cart-item-price {
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        .cart-summary {
+            background-color: #f8f9fa;
             padding: 20px;
             border-radius: 10px;
         }
 
-        .buying-order-summary {
-            
-            padding: 20px;
-            border-radius: 10px;
+        .cart-total {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 10px;
         }
 
-        .buying-product-image {
-            width: 100%;
-            max-width: 300px;
-        }
-
-        .buying-complete-order-button {
+        .cart-checkout-button {
             display: block;
             width: 100%;
             padding: 10px;
             text-align: center;
-            background-color: #007bff;
+            background-color: #59ab6e;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     @Html.Partial("~/Views/Navbar.cshtml")
-    <div class="buying-container">
-        <div class="buying-column">
-            <div class="buying-order-summary">
-                <h2>Order Summary</h2>
-                <ul>
-                    <li>Product Price: $100</li>
-                    <li>Shipping: $10</li>
-                    <li><strong>Total: $110</strong></li>
-                </ul>
+    <form action="completeorder" method="get">
+        <div class="cart-container">
+            <div class="cart-column">
+                <div class="cart-item">
+                    @foreach (var image in Model.images)
+                    {
+                        <img src="~/img/@image.ImageUrl" alt="Product Image" class="cart-item-image">
+                        break;
+                    }
+                    <div class="cart-item-details">
+                        <h3 class="cart-item-name">@Model.pd.ProductName @Model.color.ColorName @Model.pd.ProductDetailId</h3>
+                        <p class="cart-item-price">$@Model.pd.Price</p>
+                        <p>Size: @Model.size.SizeName</p>
+                        <p>Color: @Model.color.ColorName</p>
+                        <input name="amount" type="number" value="@ViewBag.quantity" min="1" max="@Model.scs.QuantityStock" class="cart-item-quantity">
+                        <input type="hidden" name="commonid" value="@Model.scs.CommonId" />
+                    </div>
+                </div>
             </div>
-            <div class="buying-column">
-                <h2>Customer Information</h2>
-                <p>Name: John Doe</p>
-                <p>Email: john@example.com</p>
-                <p>Address: 123 Main Street</p>
+            <div class="cart-column">
+                <div style="margin-bottom:50px" class="cart-summary">
+                    <h2>Customer information</h2>
+                    <p>Name: @user.DisplayName</p>
+                    <p>Phone Number: @user.PhoneNumber</p>
+                    <p>Email: @user.Email</p>
+                    <p>
+                        Location Shipping :
+                        <select name="location_shipping">
+                            @foreach (var a in ViewBag.Address)
+                            {
+                                <option value="@a.AddressId">@a.AddressName</option>
+                            }
+                        </select>
+                    </p>
+                </div>
+                <div class="cart-summary">
+                    <h2>Order Summary</h2>
+                    <p>Subtotal: $<span id="subtotal">0</span></p>
+                    <p>Shipping: $10</p>
+                    <p class="cart-total">Total: $<span id="total">0</span></p>
+                    <input type="hidden" id="totalHidden" name="totalprice" value="">
+                    <button class="cart-checkout-button">Complete Order</button>
+                </div>
             </div>
-
-            <button style="margin-top:100px; margin-left:200px" class="buying-complete-order-button">Complete Order</button>
         </div>
-        <div class="buying-column">
-            <img src="~/img/p114.jpg" alt="Product Image" class="buying-product-image">
-            
-        </div>
-    </div>
+    </form>
     @Html.Partial("~/Views/footer.cshtml")
+    <script>
+        function updateCartSummary() {
+            var subtotal = 0;
+            var quantityInputs = document.querySelectorAll('.cart-item-quantity');
+            quantityInputs.forEach(function (input) {
+                var price = parseFloat(input.closest('.cart-item').querySelector('.cart-item-price').innerText.replace('$', ''));
+                var quantity = parseInt(input.value);
+                subtotal += price * quantity;
+            });
+            var shipping = 10;
+            var total = subtotal + shipping;
+
+            document.getElementById('subtotal').innerText = subtotal.toFixed(2);
+            document.getElementById('total').innerText = total.toFixed(2);
+            document.getElementById('totalHidden').value = total.toFixed(2);
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            updateCartSummary();
+            var quantityInputs = document.querySelectorAll('.cart-item-quantity');
+            quantityInputs.forEach(function (input) {
+                input.addEventListener('input', updateCartSummary);
+            });
+        });
+    </script>
 </body>
 </html>
 

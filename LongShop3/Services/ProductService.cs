@@ -19,6 +19,11 @@ namespace LongShop3.Services
             return _repo.AddtoCartRepo(pid, cid, sid, quantity, username);
         }
 
+        public List<Color> getAllColor()
+        {
+            return _repo.getAllColor();
+        }
+
         public List<ProductWithImageColor> GetAllProduct(int CategoryId, int BrandId, string sort, int offset, int count)
         {
             return _repo.GetAllProduct(CategoryId, BrandId, sort, offset, count);
@@ -47,6 +52,11 @@ namespace LongShop3.Services
         public Product_Brand_Cate GetProductDetailInfor(int Id)
         {
             return _repo.GetProductDetailInfor(Id);
+        }
+
+        public List<Size> GetSizeList()
+        {
+            return _repo.GetSizeList();
         }
 
         public List<Size> GetSizesByProductIdAndColorId(int productId, int colorId)

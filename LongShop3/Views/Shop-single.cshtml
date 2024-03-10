@@ -788,13 +788,20 @@
 
 
         document.addEventListener("DOMContentLoaded", function (event) {
-            // Lấy giá trị từ query string
             var urlParams = new URLSearchParams(window.location.search);
             var addSuccess = urlParams.get('AddSuccess');
-
-            // Kiểm tra giá trị và hiển thị thông báo
+            var Addselling = urlParams.get('Addselling');
+            var err = urlParams.get('err');
             if (addSuccess === 'True') {
                 alert('Add to cart success!');
+            }
+
+            if (Addselling === 'False') {
+                alert('Not enough quantity in stock to sell!');
+            }
+
+            if (err === 'False') {
+                alert('Something went wrong!');
             }
         });
     </script>

@@ -15,6 +15,22 @@ namespace LongShop3.Repositories
             return null;
         }
 
+        public Group getRoleRepo(string username)
+        {
+            using(SHOPLONG5Context context = new SHOPLONG5Context())
+            {
+                var query = from g in context.Groups
+                            join ga in context.GroupAccounts on g.GroupId equals ga.GroupId
+                            where ga.Username == username
+                            select new Group
+                            {
+                                GroupId = g.GroupId,
+                                GroupName = g.GroupName
+                            };
+                return query.FirstOrDefault();       
+            }
+        }
+
         public User GetUser(string name, string pass)
         {
             SHOPLONG5Context _context = new SHOPLONG5Context();

@@ -4,6 +4,6 @@ namespace LongShop3.Services.IServices
 {
     public interface ICartService
     {
-        List<Cart> getListCart(string username);
+        List<Product_Size_Color_Stock> getListCart(string username);
     }
 }

@@ -1,13 +1,21 @@
 ﻿using LongShop3.Models;
+using LongShop3.Repositories.IRepo;
 using LongShop3.Services.IServices;
 
 namespace LongShop3.Services
 {
     public class CartService : ICartService
     {
-        public List<Cart> getListCart(string username)
+        private readonly ICartRepo _cartRepo;
+
+        public CartService(ICartRepo cartRepo)
         {
-            throw new NotImplementedException();
+            _cartRepo = cartRepo;
+        }
+
+        public List<Product_Size_Color_Stock> getListCart(string username)
+        {
+            return _cartRepo.getallCart(username);
         }
     }
 }

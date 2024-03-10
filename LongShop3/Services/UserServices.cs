@@ -5,10 +5,10 @@ using LongShop3.Services.IServices;
 namespace LongShop3.Services
 {
     
-    public class UserServices : IUserServices
+    public class CateRepo : IUserServices
     {
         private readonly IUserRepo _urepo;
-        public UserServices(IUserRepo urepo)
+        public CateRepo(IUserRepo urepo)
         {
             _urepo = urepo;
         }
@@ -16,6 +16,11 @@ namespace LongShop3.Services
         public void getAllFeature(string username)
         {
             
+        }
+
+        public Group getRole(string username)
+        {
+            return _urepo.getRoleRepo(username);
         }
 
         public User getUser(string username, string pass)

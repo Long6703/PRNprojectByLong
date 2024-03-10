@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LongShop3")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+434f6ab97eff477a797ad8bd780fc858741fd122")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e581a682ef01924fa15310968fcb09e39908b968")]
 [assembly: System.Reflection.AssemblyProductAttribute("LongShop3")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LongShop3")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

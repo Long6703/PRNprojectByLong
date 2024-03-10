@@ -14,5 +14,7 @@ namespace LongShop3.Repositories.IRepo
         List<Color> GetColorsByProductId(int productid);
         public List<Size> GetSizesByProductIdAndColorId(int productId, int colorId);
         public bool AddtoCartRepo(int pid, int cid, int sid, int quantity, string username);
+        public List<Color> getAllColor();
+        public List<Size> GetSizeList();
     }
 }

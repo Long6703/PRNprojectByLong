@@ -14,5 +14,7 @@ namespace LongShop3.Services.IServices
         List<Color> getcolorsbypdid(int productid);
         public List<Size> GetSizesByProductIdAndColorId(int productId, int colorId);
         public bool AddtoCart(int pid, int cid, int sid, int quantity, string username);
+        public List<Color> getAllColor();
+        public List<Size> GetSizeList();
     }
 }

@@ -1,35 +1,35 @@
 ﻿using LongShop3.Models;
 using LongShop3.Repositories.IRepo;
-using Microsoft.EntityFrameworkCore.Migrations;
-using System.Drawing;
 
 namespace LongShop3.Repositories
 {
-    public class CartRepo : ICartRepo
+    public class OrderRepo : IOrderRepo
     {
-        public List<Product_Size_Color_Stock> getallCart(string username)
+        public Product_Size_Color_Stock getProductinfor(int commonId)
         {
             using (var context = new SHOPLONG5Context())
             {
-                var commonIds = context.Carts.Where(x => x.Username == username).Select(x => x.CommonId).ToList();
 
                 var query = (from scs in context.SizeColorStocks
                              join pd in context.ProductDetails on scs.ProductDetailId equals pd.ProductDetailId
                              join s in context.Sizes on scs.SizeId equals s.SizeId
                              join c in context.Colors on scs.ColorId equals c.ColorId
-                             join cart in context.Carts on scs.CommonId equals cart.CommonId
-                             where commonIds.Contains(scs.CommonId) && cart.Username == username
+                             where scs.CommonId == commonId
                              select new Product_Size_Color_Stock
                              {
                                  pd = pd,
                                  size = s,
                                  color = c,
                                  scs = scs,
-                                 cart = cart,
                                  images = context.Images.Where(i => i.ProductDetailId == scs.ProductDetailId && i.ColorId == scs.ColorId).ToList()
-                             }).ToList();
-                return query;
+                             });
+                return query.FirstOrDefault();
             }
+        }
+
+        public void CompleteOrder(Order order)
+        {
+
         }
     }
 }

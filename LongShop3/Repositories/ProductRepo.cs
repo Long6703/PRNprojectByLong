@@ -168,9 +168,9 @@ namespace LongShop3.Repositories
         {
             using (SHOPLONG5Context context = new SHOPLONG5Context())
             {
-                var query = (from pd in context.ProductDetails // Thay thế ProductDetails bằng tên DbSet tương ứng trong DbContext
-                            join b in context.Brands on pd.BrandId equals b.BrandId // Giả sử thuộc tính là BrandId
-                            join ca in context.Categories on pd.CategoryId equals ca.CategoryId // Giả sử thuộc tính là CategoryId
+                var query = (from pd in context.ProductDetails 
+                            join b in context.Brands on pd.BrandId equals b.BrandId 
+                            join ca in context.Categories on pd.CategoryId equals ca.CategoryId 
                             where pd.ProductDetailId == id
                             select new Product_Brand_Cate
                             {
@@ -268,6 +268,24 @@ namespace LongShop3.Repositories
                     ctx.SaveChanges();
                     return true;
                 }
+            }
+        }
+
+        public List<Color> getAllColor()
+        {
+            using (SHOPLONG5Context context = new SHOPLONG5Context())
+            {
+                List<Color> listcorlor = context.Colors.ToList();
+                return listcorlor;
+            }
+        }
+
+        public List<Size> GetSizeList()
+        {
+            using (SHOPLONG5Context context = new SHOPLONG5Context())
+            {
+                List<Size> listsize = context.Sizes.ToList();
+                return listsize;
             }
         }
     }

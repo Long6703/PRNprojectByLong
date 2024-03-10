@@ -2,9 +2,26 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
     @using LongShop3.Models
-    var u = HttpContextAccessor.HttpContext.Session.GetString("user");
+    @using LongShop3.Services.IServices
+    @using System.Text.Json
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+    @inject IUserServices uservice
+    @inject ICartService cartservice
+    var userJson = HttpContextAccessor.HttpContext.Session.GetString("user");
+    User user = null;
+    Group role = null;
+    int count_cart = 0;
+    if (!string.IsNullOrEmpty(userJson))
+    {
+        user = JsonSerializer.Deserialize<User>(userJson);
+        if (user != null && !string.IsNullOrEmpty(user.Username))
+        {
+            role = uservice.getRole(user.Username);
+            List<Product_Size_Color_Stock> inforproduct = cartservice.getListCart(user.Username);
+            count_cart = inforproduct.Count;
+        }
+    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -80,18 +97,26 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/contact">Contact</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="manageproduct">Admin Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="userprofile">User Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/logout">Logout</a>
-                        </li>
+                        @if (user == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/login">Login</a>
+                            </li>
+                        }else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="userprofile">User Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/logout">Logout</a>
+                            </li>
+                            @if (role.GroupId == 2)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="manageproduct">Admin Dashboard</a>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
                 <div class="navbar align-self-center d-flex">
@@ -110,7 +135,7 @@
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="/viewcart">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">@count_cart</span>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="userprofile">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>

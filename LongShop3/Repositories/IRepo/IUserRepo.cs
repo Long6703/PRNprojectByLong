@@ -8,5 +8,7 @@ namespace LongShop3.Repositories.IRepo
 
         public List<Feature> getAllFeature(string name);
         bool signup(User user);
+
+        public Group getRoleRepo(string username);
     }
 }
