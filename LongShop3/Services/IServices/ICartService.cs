@@ -5,5 +5,7 @@ namespace LongShop3.Services.IServices
     public interface ICartService
     {
         List<Product_Size_Color_Stock> getListCart(string username);
+
+        public bool deleteAllcart(string username);
     }
 }

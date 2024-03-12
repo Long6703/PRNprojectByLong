@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LongShop3.Controllers.Authen;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LongShop3.Controllers.Admin
 {
+    [AuthenClass]
     public class AdminOrderController : Controller
     {
         [Route("/manageorder")]

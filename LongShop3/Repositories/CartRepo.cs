@@ -7,6 +7,21 @@ namespace LongShop3.Repositories
 {
     public class CartRepo : ICartRepo
     {
+        public bool deleteAllcartRepo(string username)
+        {
+            using(var context = new SHOPLONG5Context())
+            {
+                var query = context.Carts.Where(c => c.Username == username);
+                List<Cart> listcart = query.ToList();
+                foreach (var cart in listcart)
+                {
+                    context.Carts.Remove(cart);
+                }
+                context.SaveChanges();
+                return true;
+            }
+        }
+
         public List<Product_Size_Color_Stock> getallCart(string username)
         {
             using (var context = new SHOPLONG5Context())

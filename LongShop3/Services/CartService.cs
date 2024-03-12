@@ -13,6 +13,11 @@ namespace LongShop3.Services
             _cartRepo = cartRepo;
         }
 
+        public bool deleteAllcart(string username)
+        {
+            return _cartRepo.deleteAllcartRepo(username);
+        }
+
         public List<Product_Size_Color_Stock> getListCart(string username)
         {
             return _cartRepo.getallCart(username);

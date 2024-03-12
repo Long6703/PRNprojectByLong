@@ -1,4 +1,5 @@
-﻿using LongShop3.Models;
+﻿using LongShop3.Controllers.Authen;
+using LongShop3.Models;
 using LongShop3.Services.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,8 +8,9 @@ using System.Text.Json;
 
 namespace LongShop3.Controllers.Users
 {
+    [AuthenClass]
     public class UsersController : Controller
-    {
+    {   
         private readonly IProductServicecs _productServicecs;
         private readonly IOrderService _orderService;
 
@@ -190,11 +192,11 @@ namespace LongShop3.Controllers.Users
             }
             Guid uniqueGuid = Guid.NewGuid();
             string uniqueString = uniqueGuid.ToString();
-            var filename = username + "_" + avatar.FileName + "_" + uniqueString;
-            var filePath = Path.Combine(uploadsFolder, filename);
-            Console.WriteLine("uploadsFolder " + uploadsFolder);
-            Console.WriteLine("filePath : " + filePath);
-            Console.WriteLine("username : " + username);
+            string extension = Path.GetExtension(avatar.FileName); 
+            string filenameWithoutExtension = Path.GetFileNameWithoutExtension(avatar.FileName); 
+            string newFilename = $"{username}_{filenameWithoutExtension}_{uniqueString}{extension}";
+            Console.WriteLine(newFilename);
+            string filePath = Path.Combine(uploadsFolder, newFilename);
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await avatar.CopyToAsync(stream);
@@ -203,7 +205,7 @@ namespace LongShop3.Controllers.Users
             var currentuser = context.Users.FirstOrDefault(x => x.Username == username);
             if (currentuser != null)
             {
-                currentuser.AvatarUrl = filename;
+                currentuser.AvatarUrl = newFilename;
                 context.Update(currentuser);
                 context.SaveChanges();
             }

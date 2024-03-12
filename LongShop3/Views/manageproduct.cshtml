@@ -5,10 +5,23 @@
     @using LongShop3.Models
     @model List<ProductDetail>
     @using LongShop3.Services.IServices;
+    @using System.Collections.Generic;
     @inject ICateServices cate;
     @inject IBrandService brands;
     var listcate = cate.GetAllCateForAdmin();
     var listbrand = brands.GetBrandsForAdmin();
+    int colorid = 0;
+    foreach(var p in Model)
+    {
+        List<Color> colorsForProduct = ViewBag.ColorDictionary[p.ProductDetailId];
+        foreach(var c in colorsForProduct)
+        {
+            colorid = c.ColorId;
+            break;
+        }
+
+    }
+                                        
 
 }
 <!DOCTYPE html>
@@ -323,6 +336,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Product Name</th>
+                                <th>Avaliable Color</th>
                                 <th>Price</th>
                                 <th>Is Active</th>
                                 <th>Action</th>
@@ -334,9 +348,26 @@
                                 <tr>
                                     <td>@p.ProductDetailId</td>
                                     <td>@p.ProductName</td>
+                                    <td>
+                                        @{
+                                            List<Color> colorsForProduct = ViewBag.ColorDictionary[p.ProductDetailId];
+                                            foreach (var c in colorsForProduct)
+                                            {
+                                                <a href="detailproductforadmin?productid=@p.ProductDetailId&colorid=@c.ColorId"><span>@c.ColorName /</span></a>
+                                            }
+                                        }
+                                    </td>
                                     <td>$@p.Price</td>
                                     <td>@(p.IsActive == true ? "Active" : "Not Active")</td>
-                                    <td><a href="detailproductforadmin?productid=@p.ProductDetailId">Detail</a> | <a href="">Edit</a></td>
+                                    <td>
+                                        @{
+                                            foreach (var c in colorsForProduct)
+                                            {
+                                                <span><a href="detailproductforadmin?productid=@p.ProductDetailId&colorid=@c.ColorId">Detail</a> | <a href="editproductforadmin?productid=@p.ProductDetailId&colorid=@c.ColorId">Edit</a></span>
+                                                break;
+                                            }
+                                        }
+                                    </td>
                                 </tr>
                             }
                             <!-- Thêm các hàng cho các sản phẩm khác ở đây -->

@@ -10,7 +10,8 @@
     @inject ICartService cartservice
     var userJson = HttpContextAccessor.HttpContext.Session.GetString("user");
     User user = null;
-    Group role = null;
+    List<Group> role = null;
+    bool checkrole = false;
     int count_cart = 0;
     if (!string.IsNullOrEmpty(userJson))
     {
@@ -18,6 +19,14 @@
         if (user != null && !string.IsNullOrEmpty(user.Username))
         {
             role = uservice.getRole(user.Username);
+            foreach(var r in role)
+            {
+                if(r.GroupId == 2)
+                {
+                    checkrole = true;
+                    break;
+                }
+            }
             List<Product_Size_Color_Stock> inforproduct = cartservice.getListCart(user.Username);
             count_cart = inforproduct.Count;
         }
@@ -108,9 +117,12 @@
                                 <a class="nav-link" href="userprofile">User Profile</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="orderhistory">Order History</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="/logout">Logout</a>
                             </li>
-                            @if (role.GroupId == 2)
+                            @if (checkrole)
                             {
                                 <li class="nav-item">
                                     <a class="nav-link" href="manageproduct">Admin Dashboard</a>

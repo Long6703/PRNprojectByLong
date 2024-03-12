@@ -13,6 +13,11 @@ namespace LongShop3.Services
             _orderRepo = orderRepo;
         }
 
+        public List<Order> getOrdersByUser(string username)
+        {
+            return _orderRepo.getOrderhistory(username);
+        }
+
         public Product_Size_Color_Stock getProductinfor(int commonId)
         {
             return _orderRepo.getProductinfor(commonId);

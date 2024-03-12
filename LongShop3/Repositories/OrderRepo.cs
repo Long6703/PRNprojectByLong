@@ -27,9 +27,24 @@ namespace LongShop3.Repositories
             }
         }
 
-        public void CompleteOrder(Order order)
+        public List<Order> getOrderhistory(string username)
         {
-
+            using (var context = new SHOPLONG5Context())
+            {
+                var query = from o in context.Orders
+                            join a in context.Addresses on o.Addressid equals a.AddressId
+                            where o.Username == username
+                            select new Order
+                            {
+                                Orderid = o.Orderid,
+                                Username = username,
+                                TotalPrice = o.TotalPrice,
+                                StatusOrder = o.StatusOrder,
+                                OrderDate = o.OrderDate,
+                                Address = a
+                            };
+                return query.ToList();
+            }
         }
     }
 }

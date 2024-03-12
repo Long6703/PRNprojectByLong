@@ -1,10 +1,12 @@
-﻿using LongShop3.Models;
+﻿using LongShop3.Controllers.Authen;
+using LongShop3.Models;
 using LongShop3.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
 namespace LongShop3.Controllers
 {
+    [AuthenClass]
     public class CartController : Controller
     {
         private readonly ICartService _cartService;

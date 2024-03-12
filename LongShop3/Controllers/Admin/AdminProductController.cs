@@ -39,6 +39,13 @@ namespace LongShop3.Controllers.Admin
             {
                 totalpage = 1;
             }
+            Dictionary<int, List<Color>> colorDictionary = new Dictionary<int, List<Color>>();
+            foreach (var p in list)
+            {
+                List<Color> listcolor = _productServicecs.getcolorsbypdid(p.ProductDetailId);
+                colorDictionary.Add(p.ProductDetailId, listcolor);
+            }
+            ViewBag.ColorDictionary = colorDictionary;
             ViewBag.Status = status;
             ViewBag.totalpage = totalpage;
             ViewBag.currentpage = page;
@@ -62,12 +69,69 @@ namespace LongShop3.Controllers.Admin
         }
 
         [Route("/detailproductforadmin")]
-        public IActionResult DetailProduct(int ProductDetailId)
+        public IActionResult DetailProduct(int productid, int colorid)
         {
             var userJson = HttpContext.Session.GetString("user");
             var user = JsonSerializer.Deserialize<User>(userJson);
             ViewBag.Username = user.Username;
-            return View("~/Views/DetailProduct.cshtml");
+            List<Color> listcolor = _productServicecs.getcolorsbypdid(productid);
+            ViewBag.listcolor = listcolor;
+            ProductWithImageColor productinforwithcolor = _productServicecs.GetProductDetail(productid, colorid);
+            Category c = null;
+            Brand brand = null;
+            using(SHOPLONG5Context context = new SHOPLONG5Context())
+            {
+                var productDetail = context.ProductDetails.FirstOrDefault(pd => pd.ProductDetailId == productid);
+                if (productDetail != null)
+                {
+                    int categoryid = productDetail.CategoryId;
+                    int brandid = (int)productDetail.BrandId;
+                    c = context.Categories.FirstOrDefault(x => x.CategoryId == categoryid);
+                    brand = context.Brands.FirstOrDefault(x => x.BrandId == brandid);
+                }
+                ViewBag.CateName = c.CategoryName;
+                ViewBag.BrandName = brand.BrandName;
+                ViewBag.colorid = colorid;
+            }
+            List<SizeColorStock_Size> inforstock = _productServicecs.getallProductInforforAdmin(productid, colorid);
+            if( inforstock != null && inforstock.Count > 0 )
+            {
+                ViewBag.inforstock = inforstock;
+            }
+            return View("~/Views/DetailProduct.cshtml", productinforwithcolor);
+        }
+
+        [Route("/editproductforadmin")]
+        public IActionResult EditProduct(int productid, int colorid)
+        {
+            var userJson = HttpContext.Session.GetString("user");
+            var user = JsonSerializer.Deserialize<User>(userJson);
+            ViewBag.Username = user.Username;
+            List<Color> listcolor = _productServicecs.getcolorsbypdid(productid);
+            ViewBag.listcolor = listcolor;
+            ProductWithImageColor productinforwithcolor = _productServicecs.GetProductDetail(productid, colorid);
+            Category c = null;
+            Brand brand = null;
+            using (SHOPLONG5Context context = new SHOPLONG5Context())
+            {
+                var productDetail = context.ProductDetails.FirstOrDefault(pd => pd.ProductDetailId == productid);
+                if (productDetail != null)
+                {
+                    int categoryid = productDetail.CategoryId;
+                    int brandid = (int)productDetail.BrandId;
+                    c = context.Categories.FirstOrDefault(x => x.CategoryId == categoryid);
+                    brand = context.Brands.FirstOrDefault(x => x.BrandId == brandid);
+                }
+                ViewBag.CateName = c.CategoryName;
+                ViewBag.BrandName = brand.BrandName;
+                ViewBag.colorid = colorid;
+            }
+            List<SizeColorStock_Size> inforstock = _productServicecs.getallProductInforforAdmin(productid, colorid);
+            if (inforstock != null && inforstock.Count > 0)
+            {
+                ViewBag.inforstock = inforstock;
+            }
+            return View("~/Views/EditProduct.cshtml", productinforwithcolor);
         }
     }
 }

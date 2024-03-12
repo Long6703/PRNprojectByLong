@@ -15,7 +15,7 @@ namespace LongShop3.Repositories
             return null;
         }
 
-        public Group getRoleRepo(string username)
+        public List<Group> getRoleRepo(string username)
         {
             using(SHOPLONG5Context context = new SHOPLONG5Context())
             {
@@ -27,7 +27,7 @@ namespace LongShop3.Repositories
                                 GroupId = g.GroupId,
                                 GroupName = g.GroupName
                             };
-                return query.FirstOrDefault();       
+                return query.ToList();
             }
         }
 

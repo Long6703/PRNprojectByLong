@@ -1,12 +1,24 @@
-﻿using LongShop3.Models;
+﻿using LongShop3.Controllers.Authen;
+using LongShop3.Models;
+using LongShop3.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace LongShop3.Controllers
 {
+    [AuthenClass]
     public class BuyController : Controller
     {
+        private readonly ICartService _cartService;
+        private readonly IOrderService _orderService;
+
+        public BuyController(ICartService cartService, IOrderService orderService)
+        {
+            _cartService = cartService;
+            _orderService = orderService;
+        }
+
         [Route("/completeorder")]
         public IActionResult Completeorder(int commonid, int location_shipping, double totalprice, int amount)
         {
@@ -51,13 +63,14 @@ namespace LongShop3.Controllers
                 if (parameter.Key == "totalprice")
                 {
                     totalprice = Double.Parse(parameter.Value);
+                    Console.WriteLine("totalprice : " + totalprice);
                 }
                 if (parameter.Key == "location_shipping")
                 {
                     location_shipping = int.Parse(parameter.Value);
+                    Console.WriteLine("location_shipping : " + location_shipping);
                 }
             }
-
             Order order = new Order();
             order.Username = user.Username;
             order.TotalPrice = (decimal)totalprice;
@@ -66,29 +79,48 @@ namespace LongShop3.Controllers
             order.Addressid = location_shipping;
             context.Orders.Add(order);
             context.SaveChanges();
-
-            foreach (var parameter in queryCollection)
+            foreach (var p in queryCollection)
             {
-                string paramName = parameter.Key; 
-                string paramValue = parameter.Value;
+                string parameterName = p.Key;
                 int commonid = 0;
-                int amount = 0;
-                if (paramName == "commonid")
+                if (parameterName.StartsWith("amount_"))
                 {
-                    commonid = int.Parse(paramValue);
+                    string[] result = parameterName.Split('_');
+                    if (result.Length > 0)
+                    {
+                        commonid = int.Parse(result[1]);
+                    }
+                    Console.WriteLine("commoid of amout_" + commonid + " : " + p.Value);
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.CommonId = commonid;
+                    orderDetail.Amount = int.Parse(p.Value);
+                    orderDetail.Orderid = order.Orderid;
+                    context.OrderDetails.Add(orderDetail);
+                    var scs = context.SizeColorStocks.FirstOrDefault(x => x.CommonId == commonid);
+                    if (scs != null)
+                    {
+                        scs.QuantityStock = scs.QuantityStock - orderDetail.Amount;
+                    }
+                    context.SaveChanges();
                 }
-                if (paramName == "amount")
-                {
-                    amount = int.Parse(paramValue);
-                }
-                OrderDetail orderDetail = new OrderDetail();
-                orderDetail.CommonId = commonid;
-                orderDetail.Amount = amount;
-                orderDetail.Orderid = order.Orderid;
-                context.OrderDetails.Add(orderDetail);
-                context.SaveChanges();
             }
-            return View("~/Views/thankyou.cshtml");
+            if (_cartService.deleteAllcart(user.Username))
+            {
+                return View("~/Views/thankyou.cshtml");
+            }
+
+            return View("Error");
+        }
+
+        [Route("/orderhistory")]
+        public IActionResult OrderHistory()
+        {
+            var userJson = HttpContext.Session.GetString("user");
+            var user = JsonSerializer.Deserialize<User>(userJson);
+            List<Order> listorder = _orderService.getOrdersByUser(user.Username);
+            SHOPLONG5Context sHOPLONG5Context = new SHOPLONG5Context();
+            List<Address> listaddress = sHOPLONG5Context.Addresses.ToList();
+            return View("~/Views/orderhistory.cshtml", listorder);
         }
     }
 }

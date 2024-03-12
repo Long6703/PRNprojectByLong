@@ -18,7 +18,7 @@ namespace LongShop3.Services
             
         }
 
-        public Group getRole(string username)
+        public List<Group> getRole(string username)
         {
             return _urepo.getRoleRepo(username);
         }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "a16cXr3aGN04Tq5QlvqtVgcD/fkT66vfd8iI1yF78OU=",
+  "Hash": "EyDPMeULBT1/Ef0XZlAAqFNktiigjZQ4KNyRm0RLeO8=",
   "Source": "LongShop3",
   "BasePath": "_content/LongShop3",
   "Mode": "Default",
@@ -623,6 +623,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\glasses.jpg"
+    },
+    {
+      "Identity": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\long_avt_03126964-e66c-4f9b-ba70-05e1ee774f83.jpg",
+      "SourceId": "LongShop3",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\",
+      "BasePath": "_content/LongShop3",
+      "RelativePath": "img/long_avt_03126964-e66c-4f9b-ba70-05e1ee774f83.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\long_avt_03126964-e66c-4f9b-ba70-05e1ee774f83.jpg"
     },
     {
       "Identity": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\longbeo_412035946_842204204580297_7563689038935233321_n.jpg",

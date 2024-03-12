@@ -84,7 +84,7 @@ namespace LongShop3.Repositories
 
         }
 
-        private List<ProductWithImageColor> getAll()
+        public List<ProductWithImageColor> getAll()
         {
             SHOPLONG5Context context = new SHOPLONG5Context();
             var result = from pd in context.ProductDetails
@@ -288,5 +288,22 @@ namespace LongShop3.Repositories
                 return listsize;
             }
         }
+
+        public List<SizeColorStock_Size> getallProductInforforAdmin(int productid, int colorid)
+        {
+            using (var context = new SHOPLONG5Context())
+            {
+                var query = from size in context.Sizes
+                            join scs in context.SizeColorStocks on size.SizeId equals scs.SizeId
+                            where scs.ProductDetailId == productid && scs.ColorId == colorid
+                            select new SizeColorStock_Size
+                            {
+                                size = size,
+                                sizesolorstock = scs
+                            };
+                return query.ToList();
+            }
+        }
+
     }
 }

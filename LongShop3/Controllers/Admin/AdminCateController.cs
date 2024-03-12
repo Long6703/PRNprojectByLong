@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace LongShop3.Controllers.Admin
 {
-    
+    [AuthenClass]
     public class AdminCateController : Controller
     {
         private readonly ICateServices _cateservice;

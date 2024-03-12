@@ -108,9 +108,8 @@
                             <p class="cart-item-price">$@infor.pd.Price</p>
                             <p>Size: @infor.size.SizeName</p>
                             <p>Color: @infor.color.ColorName</p>
-                            <input name="amount" type="number" value="@infor.cart.Amount" max="@infor.scs.QuantityStock" min="1" class="cart-item-quantity">
+                            <input name="amount_@infor.scs.CommonId" type="number" value="@infor.cart.Amount" max="@infor.scs.QuantityStock" min="1" class="cart-item-quantity">
                             <a style="text-decoration:none" href="deletecart?cartid=@infor.cart.Cartid">Delete</a>
-                            <input type="hidden" name="commonid" value="@infor.scs.CommonId" />
                         </div>
                     </div>
                 }
