@@ -29,6 +29,7 @@ namespace LongShop3.Controllers
             return Redirect("home");
         }
 
+        [HttpPost]
         [Route("/dologin")]
         public IActionResult doLogin(string username, string pass)
         {
