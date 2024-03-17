@@ -59,6 +59,11 @@ namespace LongShop3.Services
             return _repo.GetProductDetailById(Id, colorid);
         }
 
+        public ProductWithImageColor GetProductDetailByIdForAdmin(int id, int colorid)
+        {
+            return _repo.GetProductDetailByIdForAdmin(id, colorid);
+        }
+
         public Product_Brand_Cate GetProductDetailInfor(int Id)
         {
             return _repo.GetProductDetailInfor(Id);

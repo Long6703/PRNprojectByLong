@@ -76,7 +76,7 @@ namespace LongShop3.Controllers.Admin
             ViewBag.Username = user.Username;
             List<Color> listcolor = _productServicecs.getcolorsbypdid(productid);
             ViewBag.listcolor = listcolor;
-            ProductWithImageColor productinforwithcolor = _productServicecs.GetProductDetail(productid, colorid);
+            ProductWithImageColor productinforwithcolor = _productServicecs.GetProductDetailByIdForAdmin(productid, colorid);
             Category c = null;
             Brand brand = null;
             using(SHOPLONG5Context context = new SHOPLONG5Context())
@@ -109,12 +109,14 @@ namespace LongShop3.Controllers.Admin
             ViewBag.Username = user.Username;
             List<Color> listcolor = _productServicecs.getcolorsbypdid(productid);
             ViewBag.listcolor = listcolor;
-            ProductWithImageColor productinforwithcolor = _productServicecs.GetProductDetail(productid, colorid);
+            ProductWithImageColor productinforwithcolor = _productServicecs.GetProductDetailByIdForAdmin(productid, colorid);
             Category c = null;
             Brand brand = null;
+            List<Size> listsize = null;
             using (SHOPLONG5Context context = new SHOPLONG5Context())
             {
                 var productDetail = context.ProductDetails.FirstOrDefault(pd => pd.ProductDetailId == productid);
+                listsize = context.Sizes.ToList();
                 if (productDetail != null)
                 {
                     int categoryid = productDetail.CategoryId;
@@ -127,11 +129,36 @@ namespace LongShop3.Controllers.Admin
                 ViewBag.colorid = colorid;
             }
             List<SizeColorStock_Size> inforstock = _productServicecs.getallProductInforforAdmin(productid, colorid);
+            ViewBag.AllSizes = listsize;
+            ViewBag.AllSizes = listsize;
             if (inforstock != null && inforstock.Count > 0)
             {
                 ViewBag.inforstock = inforstock;
             }
             return View("~/Views/EditProduct.cshtml", productinforwithcolor);
         }
+
+        [Route("/updateproduct")]
+        public IActionResult UpdateProduct(ProductDetail newproduct)
+        {
+            using (SHOPLONG5Context context = new SHOPLONG5Context())
+            {
+                var old = context.ProductDetails.FirstOrDefault(x => x.ProductDetailId == newproduct.ProductDetailId);
+                if (old != null)
+                {
+                    old.ProductName = newproduct.ProductName;
+                    old.Price = newproduct.Price;
+                    old.CategoryId = newproduct.CategoryId;
+                    old.Description = newproduct.Description;
+                    old.IsActive = newproduct.IsActive;
+                    old.BrandId = newproduct.BrandId;
+                    context.ProductDetails.Update(old);
+                    context.SaveChanges();
+                }
+            }
+            IQueryCollection queryCollection = HttpContext.Request.Query;
+            return Redirect("manageproduct");
+        }
+
     }
 }

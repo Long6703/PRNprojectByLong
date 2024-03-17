@@ -18,5 +18,7 @@ namespace LongShop3.Repositories.IRepo
         public List<Size> GetSizeList();
         public List<ProductWithImageColor> getAll();
         public List<SizeColorStock_Size> getallProductInforforAdmin(int productid, int colorid);
+
+        public ProductWithImageColor GetProductDetailByIdForAdmin(int id, int colorid);
     }
 }
