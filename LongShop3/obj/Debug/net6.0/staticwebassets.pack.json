@@ -129,6 +129,14 @@
       "PackagePath": "staticwebassets\\img\\glasses.jpg"
     },
     {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\long123_412035946_842204204580297_7563689038935233321_n_08879ec4-5503-40cd-b6f9-9621177a1d8a.jpg",
+      "PackagePath": "staticwebassets\\img\\long123_412035946_842204204580297_7563689038935233321_n_08879ec4-5503-40cd-b6f9-9621177a1d8a.jpg"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\long123_png-transparent-trafalgar-d-water-law-monkey-d-luffy-donquixote-doflamingo-roronoa-zoro-one-piece-logo-luffy-logo-jolly-roger-smiley_ac254aaf-dc3d-45a1-874c-3e63b55d5d80.png",
+      "PackagePath": "staticwebassets\\img\\long123_png-transparent-trafalgar-d-water-law-monkey-d-luffy-donquixote-doflamingo-roronoa-zoro-one-piece-logo-luffy-logo-jolly-roger-smiley_ac254aaf-dc3d-45a1-874c-3e63b55d5d80.png"
+    },
+    {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\long_avt_03126964-e66c-4f9b-ba70-05e1ee774f83.jpg",
       "PackagePath": "staticwebassets\\img\\long_avt_03126964-e66c-4f9b-ba70-05e1ee774f83.jpg"
     },
@@ -185,60 +193,20 @@
       "PackagePath": "staticwebassets\\img\\p164.jpg"
     },
     {
-      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\p281.png",
-      "PackagePath": "staticwebassets\\img\\p281.png"
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\p281.jpg",
+      "PackagePath": "staticwebassets\\img\\p281.jpg"
     },
     {
-      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\p282.png",
-      "PackagePath": "staticwebassets\\img\\p282.png"
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\p282.jpg",
+      "PackagePath": "staticwebassets\\img\\p282.jpg"
     },
     {
-      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\p283.png",
-      "PackagePath": "staticwebassets\\img\\p283.png"
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\p283.jpg",
+      "PackagePath": "staticwebassets\\img\\p283.jpg"
     },
     {
-      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\p284.png",
-      "PackagePath": "staticwebassets\\img\\p284.png"
-    },
-    {
-      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\product_single_01.jpg",
-      "PackagePath": "staticwebassets\\img\\product_single_01.jpg"
-    },
-    {
-      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\product_single_02.jpg",
-      "PackagePath": "staticwebassets\\img\\product_single_02.jpg"
-    },
-    {
-      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\product_single_03.jpg",
-      "PackagePath": "staticwebassets\\img\\product_single_03.jpg"
-    },
-    {
-      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\product_single_04.jpg",
-      "PackagePath": "staticwebassets\\img\\product_single_04.jpg"
-    },
-    {
-      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\product_single_05.jpg",
-      "PackagePath": "staticwebassets\\img\\product_single_05.jpg"
-    },
-    {
-      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\product_single_06.jpg",
-      "PackagePath": "staticwebassets\\img\\product_single_06.jpg"
-    },
-    {
-      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\product_single_07.jpg",
-      "PackagePath": "staticwebassets\\img\\product_single_07.jpg"
-    },
-    {
-      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\product_single_08.jpg",
-      "PackagePath": "staticwebassets\\img\\product_single_08.jpg"
-    },
-    {
-      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\product_single_09.jpg",
-      "PackagePath": "staticwebassets\\img\\product_single_09.jpg"
-    },
-    {
-      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\product_single_10.jpg",
-      "PackagePath": "staticwebassets\\img\\product_single_10.jpg"
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\p284.jpg",
+      "PackagePath": "staticwebassets\\img\\p284.jpg"
     },
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\shoe.jpg",
