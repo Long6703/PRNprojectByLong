@@ -296,6 +296,7 @@
                                 <div class="col-md-6 custom-product-detail">
                                     <h5>Product Name: <input type="text" name="newproduct.ProductName" value="@Model.pd.ProductName" /></h5><br />
                                     <input type="hidden" name="newproduct.ProductDetailId" value="@Model.pd.ProductDetailId" />
+                                    <input type="hidden" name="corlorid" value="@ViewBag.colorid" />
                                     <h5>
                                         Avaliable Color :
                                         @foreach (var color in ViewBag.listcolor)
@@ -333,11 +334,11 @@
                                                 <h5 style="white-space: nowrap; min-width: 150px;">Size @size.SizeName :</h5>
                                                 @if (infor != null)
                                                 {
-                                                    <input type="number" name="@size.SizeName" value="@infor.sizesolorstock.QuantityStock" />
+                                                    <input type="number" name="sizeid_@size.SizeId" value="@infor.sizesolorstock.QuantityStock" />
                                                 }
                                                 else
                                                 {
-                                                    <input type="number" name="@size.SizeName" />
+                                                    <input type="number" name="sizeid_@size.SizeId" />
                                                 }
                                             </div>
                                         </div>

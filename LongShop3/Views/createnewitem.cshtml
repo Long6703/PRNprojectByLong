@@ -2,25 +2,13 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    @using LongShop3.Models
-    @model List<ProductDetail>
-    @using LongShop3.Services.IServices;
-    @using System.Collections.Generic;
-    @inject ICateServices cate;
-    @inject IBrandService brands;
-    var listcate = cate.GetAllCateForAdmin();
-    var listbrand = brands.GetBrandsForAdmin();
-    int colorid = 0;
-    foreach(var p in Model)
-    {
-        List<Color> colorsForProduct = ViewBag.ColorDictionary[p.ProductDetailId];
-        foreach(var c in colorsForProduct)
-        {
-            colorid = c.ColorId;
-            break;
-        }
-
-    }
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @using LongShop3.Models;
+    @model ProductWithImageColor
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -39,13 +27,14 @@
     <link href="~/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Custom styles for this template-->
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
 
     <style>
         body {
             font-family: Arial, sans-serif;
+            color: black;
         }
 
         table {
@@ -108,24 +97,78 @@
                     border-bottom-right-radius: 5px;
                 }
 
-        .form-group {
-            display: flex;
-            align-items: center;
-            margin-right: 300px;
+        .container {
+            max-width: 100%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
 
-        .form-control {
-            margin-right: 20px;
-            flex: 1;
+        h2 {
+            text-align: center;
         }
 
-        .search-box {
-            flex: 2;
+        .form-group1,
+        .form-group2,
+        .form-group3 {
+            margin-bottom: 20px;
         }
 
-        .form-group > * {
-            margin-bottom: 0;
+        label {
+            display: block;
+            font-weight: bold;
         }
+
+        input[type="text"],
+        input[type="radio"] {
+            width: calc(100% - 40px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .button1 {
+            width: calc(100% - 40px);
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: auto;
+        }
+
+            .button1:hover {
+                background-color: #0056b3;
+            }
+
+        .custom-product-images img {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .custom-product-detail h2, .custom-product-detail p {
+            margin: 10px 0;
+        }
+
+        .custom-product-images img {
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .custom-product-images .row > div {
+            padding: 30px;
+        }
+
+        .custom-product-detail h2, .custom-product-detail p {
+            margin: 10px 0;
+        }
+
     </style>
 
 </head>
@@ -139,7 +182,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/manageproduct">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -159,7 +202,7 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider">
-
+            <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
@@ -236,111 +279,36 @@
                 <!-- End of Topbar -->
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Admin Name : @ViewBag.Username + Manage Product</h1>
-                    <h5><a href="#">Create new product</a></h5>
-                    <form action="manageproduct">
-                        <div class="form-group">
-                            <!-- Thẻ select thứ nhất -->
-                            <div class="form-control">
-                                <select name="CategoryId" id="categorySelect">
-                                    <option value="0">All Categories</option>
-                                    @foreach (var c in listcate)
-                                    {
-                                        <option value="@c.CategoryId" @(c.CategoryId == ViewBag.CategoryId ? "selected" : "")>@c.CategoryName</option>
-                                    }
-                                </select>
-                            </div>
-
-                            <!-- Thẻ select thứ hai -->
-                            <div class="form-control">
-                                <select name="BrandId" id="brandSelect">
-                                    <option value="0">All Brands</option>
-                                    @foreach (var b in listbrand)
-                                    {
-                                        <option value="@b.BrandId" @(b.BrandId == ViewBag.BrandId ? "selected" : "")>@b.BrandName</option>
-                                    }
-                                </select>
-                            </div>
-
-                            <!-- Bộ hai checkbox -->
-                            <div class="form-control">
-                                <label>
-                                    <input value="asc" type="radio" name="sort" @("asc".Equals(ViewBag.Sort) ? "checked" : "")> ASC
-                                </label>
-                                <label>
-                                    <input value="desc" type="radio" name="sort" @("desc".Equals(ViewBag.Sort) ? "checked" : "")> DESC
-                                </label>
-                            </div>
-                            <div style="margin-right:50px" class="form-control">
-                                <label>
-                                    <input type="radio" name="status" value="true" @("true".Equals(ViewBag.Status) ? "checked" : "")> Active
-                                </label>
-                                <label>
-                                    <input type="radio" name="status" value="false" @("false".Equals(ViewBag.Status) ? "checked" : "")> Not Active
-                                </label>
-                            </div>
-                            <button type="submit">Filter product</button> <br />
+                    <h1 class="h3 mb-4 text-gray-800">Admin Name : @ViewBag.Username</h1>
+                    <div class="container mt-5">
+                        <div class="row">
+                            <form style="display:flex" action="">
+                                <div class="col-md-6 custom-product-detail">
+                                    <div style="display:flex; gap:20px">
+                                        <h4 style="color:black">Create new item of </h4>
+                                    </div>
+                                    <br />
+                                    <h5>
+                                        Avaliable Color :
+                                    </h5><br />
+                                    <h5>Quantity in stock : </h5>
+                                    <button type="submit">Create new item</button>
+                                </div>
+                                <div class="col-md-6 custom-product-images">
+                                    <div class="row">
+@*                                         @foreach (var image in Model.images)
+                                        {
+                                            <div class="col-6"><img src="~/img/@image.ImageUrl" alt="Product Image 1"></div>
+                                        } *@
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                    <!-- Search Box -->
-                    <form action="searchbyname_admin">
-                        <div class="search-box">
-                            <input type="text" name="name" id="searchInput" placeholder="Search by name...">
-                            <button type="submit">Search</button>
-                        </div>
-                    </form>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Product Name</th>
-                                <th>Avaliable Color</th>
-                                <th>Price</th>
-                                <th>Is Active</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var p in Model)
-                            {
-                                <tr>
-                                    <td>@p.ProductDetailId</td>
-                                    <td>@p.ProductName</td>
-                                    <td>
-                                        @{
-                                            List<Color> colorsForProduct = ViewBag.ColorDictionary[p.ProductDetailId];
-                                            foreach (var c in colorsForProduct)
-                                            {
-                                                <a href="detailproductforadmin?productid=@p.ProductDetailId&colorid=@c.ColorId"><span>@c.ColorName /</span></a>
-                                            }
-                                        }
-                                    </td>
-                                    <td>$@p.Price</td>
-                                    <td>@(p.IsActive == true ? "Active" : "Not Active")</td>
-                                    <td>
-                                        @{
-                                            foreach (var c in colorsForProduct)
-                                            {
-                                                <span><a href="detailproductforadmin?productid=@p.ProductDetailId&colorid=@c.ColorId">Detail</a> | <a href="editproductforadmin?productid=@p.ProductDetailId&colorid=@c.ColorId">Edit</a></span><br />
-                                                <span><a href="createnewitem?productid=@p.ProductDetailId&colorid=@c.ColorId">Create new item</a></span>
-                                                break;
-                                            }
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <div class="pagination">
-                        @for (int i = 1; i <= ViewBag.totalpage; i++)
-                        {
-                            <a class="@(i == ViewBag.currentpage ? "active" : "")" href="manageproduct?CategoryId=@ViewBag.CategoryId&BrandId=@ViewBag.BrandId&sort=@ViewBag.Sort&status=@ViewBag.Status&page=@i">@i</a>
-                        }
                     </div>
-
                 </div>
+
+                <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
@@ -364,6 +332,26 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="~/js/jquery-1.11.0.min.js"></script>
     <script src="~/js/bootstrap.bundle.min.js"></script>
@@ -374,6 +362,10 @@
     <!-- Custom scripts for all pages-->
     <script src="~/js/sb-admin-2.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
+

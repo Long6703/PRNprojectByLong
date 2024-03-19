@@ -139,7 +139,7 @@ namespace LongShop3.Controllers.Admin
         }
 
         [Route("/updateproduct")]
-        public IActionResult UpdateProduct(ProductDetail newproduct)
+        public IActionResult UpdateProduct(ProductDetail newproduct, int corlorid)
         {
             using (SHOPLONG5Context context = new SHOPLONG5Context())
             {
@@ -157,8 +157,57 @@ namespace LongShop3.Controllers.Admin
                 }
             }
             IQueryCollection queryCollection = HttpContext.Request.Query;
+            foreach (var item in queryCollection)
+            {
+                string paramName = item.Key;
+                int sizeid = 0;
+                if (paramName.StartsWith("sizeid_"))
+                {
+                    string[] results = paramName.Split('_');
+                    sizeid = int.Parse(results[1]);
+                    string amountstring = item.Value;
+                    if (amountstring != "" && int.Parse(amountstring) > 0)
+                    {
+                        using (SHOPLONG5Context context = new SHOPLONG5Context())
+                        {
+                            var old = context.SizeColorStocks.FirstOrDefault(x => x.ProductDetailId == newproduct.ProductDetailId && x.ColorId == corlorid && x.SizeId == sizeid);
+                            if (old != null)
+                            {
+                                old.QuantityStock = int.Parse(amountstring);
+                                context.SaveChanges();
+                            }else
+                            {
+                                SizeColorStock scs = new SizeColorStock();
+                                scs.SizeId = sizeid;
+                                scs.ColorId = corlorid;
+                                scs.ProductDetailId = newproduct.ProductDetailId;
+                                scs.QuantityStock = int.Parse(amountstring);
+                                context.SizeColorStocks.Add(scs);
+                                context.SaveChanges();
+                            }
+                            
+                        }
+                    }
+                }
+            }
             return Redirect("manageproduct");
         }
 
+        [Route("/createnewitem")]
+        public IActionResult Createnewitem(int productid, int colorid)
+        {
+            var userJson = HttpContext.Session.GetString("user");
+            var user = JsonSerializer.Deserialize<User>(userJson);
+            ViewBag.Username = user.Username;
+            List<Size> listsize = null;
+            using (SHOPLONG5Context context = new SHOPLONG5Context())
+            {
+                var productDetail = context.ProductDetails.FirstOrDefault(pd => pd.ProductDetailId == productid);
+                listsize = context.Sizes.ToList();
+            }
+            List<SizeColorStock_Size> inforstock = _productServicecs.getallProductInforforAdmin(productid, colorid);
+            ViewBag.AllSizes = listsize;
+            return View("~/Views/createnewitem.cshtml");
+        }
     }
 }
