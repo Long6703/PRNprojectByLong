@@ -200,13 +200,26 @@ namespace LongShop3.Controllers.Admin
             var user = JsonSerializer.Deserialize<User>(userJson);
             ViewBag.Username = user.Username;
             List<Size> listsize = null;
+            ProductDetail pd = null;
+            List<Color> listcolornotavaliable = null;
             using (SHOPLONG5Context context = new SHOPLONG5Context())
             {
-                var productDetail = context.ProductDetails.FirstOrDefault(pd => pd.ProductDetailId == productid);
+                pd = context.ProductDetails.FirstOrDefault(pd => pd.ProductDetailId == productid);
                 listsize = context.Sizes.ToList();
+                var query = from c in context.Colors
+                            where !(from scs in context.SizeColorStocks
+                                    where scs.ProductDetailId == productid && scs.ColorId == c.ColorId
+                                    select scs.ColorId)
+                                    .Any()
+                            select c;
+                listcolornotavaliable = query.ToList();
             }
-            List<SizeColorStock_Size> inforstock = _productServicecs.getallProductInforforAdmin(productid, colorid);
             ViewBag.AllSizes = listsize;
+            ViewBag.listcolornotavaliable = listcolornotavaliable;
+            if (pd != null)
+            {
+                ViewBag.pdName = pd.ProductName;
+            }
             return View("~/Views/createnewitem.cshtml");
         }
     }
