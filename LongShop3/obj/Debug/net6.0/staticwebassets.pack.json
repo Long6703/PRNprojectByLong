@@ -57,8 +57,32 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\1673703663583_db8d54a8-4f3d-4d2b-8b89-b7969808a428.jpg",
+      "PackagePath": "staticwebassets\\img\\1673703663583_db8d54a8-4f3d-4d2b-8b89-b7969808a428.jpg"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\261789035_664663074944140_6552030524531722811_n_1d081667-6d4a-4e8f-97e7-fdd6f691b766.jpg",
+      "PackagePath": "staticwebassets\\img\\261789035_664663074944140_6552030524531722811_n_1d081667-6d4a-4e8f-97e7-fdd6f691b766.jpg"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\412035946_842204204580297_7563689038935233321_n_3c9c15c9-1daf-4673-b16d-63f58c256c82.jpg",
+      "PackagePath": "staticwebassets\\img\\412035946_842204204580297_7563689038935233321_n_3c9c15c9-1daf-4673-b16d-63f58c256c82.jpg"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\4384342_otlamp1_4aaee550-e0a6-41ae-8254-07a3eb1c5907.jpg",
+      "PackagePath": "staticwebassets\\img\\4384342_otlamp1_4aaee550-e0a6-41ae-8254-07a3eb1c5907.jpg"
+    },
+    {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\687987 (1).jpg",
       "PackagePath": "staticwebassets\\img\\687987 (1).jpg"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\687987 (1)_4f6c1359-5d0c-4374-a500-62b401652730.jpg",
+      "PackagePath": "staticwebassets\\img\\687987 (1)_4f6c1359-5d0c-4374-a500-62b401652730.jpg"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\687987_f560eb58-3c16-40b7-9600-ab64f24cb475.jpg",
+      "PackagePath": "staticwebassets\\img\\687987_f560eb58-3c16-40b7-9600-ab64f24cb475.jpg"
     },
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\about-hero.svg",
@@ -71,6 +95,14 @@
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\apple-icon.png",
       "PackagePath": "staticwebassets\\img\\apple-icon.png"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\avt_24235d44-1d07-45c2-8c73-dc93ce7db5d8.jpg",
+      "PackagePath": "staticwebassets\\img\\avt_24235d44-1d07-45c2-8c73-dc93ce7db5d8.jpg"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\avt_546e44ed-2161-4b56-b6d3-471eb510ae3b.jpg",
+      "PackagePath": "staticwebassets\\img\\avt_546e44ed-2161-4b56-b6d3-471eb510ae3b.jpg"
     },
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\bag.jpg",
@@ -303,6 +335,18 @@
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\p444.jpg",
       "PackagePath": "staticwebassets\\img\\p444.jpg"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\png-transparent-trafalgar-d-water-law-monkey-d-luffy-donquixote-doflamingo-roronoa-zoro-one-piece-logo-luffy-logo-jolly-roger-smiley_52033bb3-6a60-4841-8535-4f1d80c4ff4b.png",
+      "PackagePath": "staticwebassets\\img\\png-transparent-trafalgar-d-water-law-monkey-d-luffy-donquixote-doflamingo-roronoa-zoro-one-piece-logo-luffy-logo-jolly-roger-smiley_52033bb3-6a60-4841-8535-4f1d80c4ff4b.png"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\raza_a_boy_flying_in_the_air_carrying_his_dog_on_his_back_and_t_03878b46-0464-41d0-b574-a453bdb651f9_16411b9e-33a7-4e98-9e88-89abd4753a59.png",
+      "PackagePath": "staticwebassets\\img\\raza_a_boy_flying_in_the_air_carrying_his_dog_on_his_back_and_t_03878b46-0464-41d0-b574-a453bdb651f9_16411b9e-33a7-4e98-9e88-89abd4753a59.png"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\raza_a_boy_flying_in_the_air_carrying_his_dog_on_his_back_and_t_03878b46-0464-41d0-b574-a453bdb651f9_d046e481-b2eb-4805-b5f6-c267fe7fdfa6.png",
+      "PackagePath": "staticwebassets\\img\\raza_a_boy_flying_in_the_air_carrying_his_dog_on_his_back_and_t_03878b46-0464-41d0-b574-a453bdb651f9_d046e481-b2eb-4805-b5f6-c267fe7fdfa6.png"
     },
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\shoe.jpg",

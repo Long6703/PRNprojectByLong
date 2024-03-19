@@ -158,7 +158,7 @@ namespace LongShop3.Repositories
         public List<ProductDetail> GetAllProductForAdmin(int CategoryId, int BrandId, string sort, int offset, int count, string status)
         {
             SHOPLONG5Context context = new SHOPLONG5Context();
-            var query = context.ProductDetails.AsQueryable(); // Bắt đầu với truy vấn LINQ
+            var query = context.ProductDetails.AsQueryable();
 
             if (CategoryId != 0)
             {
@@ -218,7 +218,7 @@ namespace LongShop3.Repositories
             using (SHOPLONG5Context context = new SHOPLONG5Context())
             {
                 var query = (from c in context.Colors
-                             join sc in context.SizeColorStocks on c.ColorId equals sc.ColorId
+                             join sc in context.Images on c.ColorId equals sc.ColorId
                              where sc.ProductDetailId == productId
                              select new Color
                              {

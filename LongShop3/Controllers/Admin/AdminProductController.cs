@@ -1,6 +1,7 @@
 ﻿using LongShop3.Controllers.Authen;
 using LongShop3.Models;
 using LongShop3.Services.IServices;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -219,8 +220,91 @@ namespace LongShop3.Controllers.Admin
             if (pd != null)
             {
                 ViewBag.pdName = pd.ProductName;
+                ViewBag.pdid = productid;
             }
             return View("~/Views/createnewitem.cshtml");
+        }
+
+        [HttpPost]
+        [Route("/docreatenewitem")]
+        public async Task<IActionResult> doCreatenewitem(int productid, int selectedColor, List<IFormFile> images)
+        {
+            long size = images.Sum(f => f.Length);
+
+            if (size == 0)
+            {
+                return Redirect("createnewitem");
+            }
+
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
+
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            foreach (var i in images)
+            {
+                if(i.Length > 0)
+                {
+                    Guid uniqueGuid = Guid.NewGuid();
+                    string uniqueString = uniqueGuid.ToString();
+                    string extension = Path.GetExtension(i.FileName);
+                    string filenameWithoutExtension = Path.GetFileNameWithoutExtension(i.FileName);
+                    string newFilename = $"{filenameWithoutExtension}_{uniqueString}{extension}";
+                    Console.WriteLine(newFilename);
+                    string filePath = Path.Combine(uploadsFolder, newFilename);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await i.CopyToAsync(stream);
+                    }
+                    using(SHOPLONG5Context context = new SHOPLONG5Context())
+                    {
+                        Image image = new Image();
+                        image.ProductDetailId = productid;
+                        image.ColorId = selectedColor;
+                        image.ImageUrl = newFilename;
+                        context.Images.Add(image);
+                        context.SaveChanges();
+                    }
+                }
+            }
+            IQueryCollection queryCollection = HttpContext.Request.Query;
+            foreach (var item in queryCollection)
+            {
+                string paramName = item.Key;
+                int sizeid = 0;
+                if (paramName.StartsWith("sizeid_"))
+                {
+                    string[] results = paramName.Split('_');
+                    sizeid = int.Parse(results[1]);
+                    string amountstring = item.Value;
+                    if (amountstring != "" && int.Parse(amountstring) > 0)
+                    {
+                        using (SHOPLONG5Context context = new SHOPLONG5Context())
+                        {
+                            var old = context.SizeColorStocks.FirstOrDefault(x => x.ProductDetailId == productid && x.ColorId == selectedColor && x.SizeId == sizeid);
+                            if (old != null)
+                            {
+                                old.QuantityStock = int.Parse(amountstring);
+                                context.SaveChanges();
+                            }
+                            else
+                            {
+                                SizeColorStock scs = new SizeColorStock();
+                                scs.SizeId = sizeid;
+                                scs.ColorId = selectedColor;
+                                scs.ProductDetailId = productid;
+                                scs.QuantityStock = int.Parse(amountstring);
+                                context.SizeColorStocks.Add(scs);
+                                context.SaveChanges();
+                            }
+
+                        }
+                    }
+                }
+            }
+            return Redirect("manageproduct");
         }
     }
 }
