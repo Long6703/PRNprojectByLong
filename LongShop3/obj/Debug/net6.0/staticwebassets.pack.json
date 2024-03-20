@@ -69,6 +69,10 @@
       "PackagePath": "staticwebassets\\img\\412035946_842204204580297_7563689038935233321_n_3c9c15c9-1daf-4673-b16d-63f58c256c82.jpg"
     },
     {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\412035946_842204204580297_7563689038935233321_n_9cb23b74-a258-454e-a717-a31ae0ab6d3d.jpg",
+      "PackagePath": "staticwebassets\\img\\412035946_842204204580297_7563689038935233321_n_9cb23b74-a258-454e-a717-a31ae0ab6d3d.jpg"
+    },
+    {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\4384342_otlamp1_4aaee550-e0a6-41ae-8254-07a3eb1c5907.jpg",
       "PackagePath": "staticwebassets\\img\\4384342_otlamp1_4aaee550-e0a6-41ae-8254-07a3eb1c5907.jpg"
     },
@@ -83,6 +87,14 @@
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\687987_f560eb58-3c16-40b7-9600-ab64f24cb475.jpg",
       "PackagePath": "staticwebassets\\img\\687987_f560eb58-3c16-40b7-9600-ab64f24cb475.jpg"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\J.PRESPERECKERT_5e018681-3c69-4b1b-9019-2fae9d4757d6.jpg",
+      "PackagePath": "staticwebassets\\img\\J.PRESPERECKERT_5e018681-3c69-4b1b-9019-2fae9d4757d6.jpg"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\MauchlyPortrait_38203159-4bfb-4035-b7ec-6f8734027492.jpg",
+      "PackagePath": "staticwebassets\\img\\MauchlyPortrait_38203159-4bfb-4035-b7ec-6f8734027492.jpg"
     },
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\about-hero.svg",
@@ -103,6 +115,10 @@
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\avt_546e44ed-2161-4b56-b6d3-471eb510ae3b.jpg",
       "PackagePath": "staticwebassets\\img\\avt_546e44ed-2161-4b56-b6d3-471eb510ae3b.jpg"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\avt_6c9f7ece-1729-489d-a9c2-c0e31d3505b3.jpg",
+      "PackagePath": "staticwebassets\\img\\avt_6c9f7ece-1729-489d-a9c2-c0e31d3505b3.jpg"
     },
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\bag.jpg",
@@ -341,8 +357,24 @@
       "PackagePath": "staticwebassets\\img\\png-transparent-trafalgar-d-water-law-monkey-d-luffy-donquixote-doflamingo-roronoa-zoro-one-piece-logo-luffy-logo-jolly-roger-smiley_52033bb3-6a60-4841-8535-4f1d80c4ff4b.png"
     },
     {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\png-transparent-trafalgar-d-water-law-monkey-d-luffy-donquixote-doflamingo-roronoa-zoro-one-piece-logo-luffy-logo-jolly-roger-smiley_7c98b078-1cb4-4b80-bb20-6d9969ec037f.png",
+      "PackagePath": "staticwebassets\\img\\png-transparent-trafalgar-d-water-law-monkey-d-luffy-donquixote-doflamingo-roronoa-zoro-one-piece-logo-luffy-logo-jolly-roger-smiley_7c98b078-1cb4-4b80-bb20-6d9969ec037f.png"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\png-transparent-trafalgar-d-water-law-monkey-d-luffy-donquixote-doflamingo-roronoa-zoro-one-piece-logo-luffy-logo-jolly-roger-smiley_b000ab41-0308-40bf-9fe5-ec3a572026bf.png",
+      "PackagePath": "staticwebassets\\img\\png-transparent-trafalgar-d-water-law-monkey-d-luffy-donquixote-doflamingo-roronoa-zoro-one-piece-logo-luffy-logo-jolly-roger-smiley_b000ab41-0308-40bf-9fe5-ec3a572026bf.png"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\raza_a_boy_flying_in_the_air_carrying_his_dog_on_his_back_and_t_03878b46-0464-41d0-b574-a453bdb651f9_1066297f-b635-48af-95c1-cc90452ab0c8.png",
+      "PackagePath": "staticwebassets\\img\\raza_a_boy_flying_in_the_air_carrying_his_dog_on_his_back_and_t_03878b46-0464-41d0-b574-a453bdb651f9_1066297f-b635-48af-95c1-cc90452ab0c8.png"
+    },
+    {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\raza_a_boy_flying_in_the_air_carrying_his_dog_on_his_back_and_t_03878b46-0464-41d0-b574-a453bdb651f9_16411b9e-33a7-4e98-9e88-89abd4753a59.png",
       "PackagePath": "staticwebassets\\img\\raza_a_boy_flying_in_the_air_carrying_his_dog_on_his_back_and_t_03878b46-0464-41d0-b574-a453bdb651f9_16411b9e-33a7-4e98-9e88-89abd4753a59.png"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\raza_a_boy_flying_in_the_air_carrying_his_dog_on_his_back_and_t_03878b46-0464-41d0-b574-a453bdb651f9_697cecce-6f5a-45fd-8b23-3a1117fb1478.png",
+      "PackagePath": "staticwebassets\\img\\raza_a_boy_flying_in_the_air_carrying_his_dog_on_his_back_and_t_03878b46-0464-41d0-b574-a453bdb651f9_697cecce-6f5a-45fd-8b23-3a1117fb1478.png"
     },
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\raza_a_boy_flying_in_the_air_carrying_his_dog_on_his_back_and_t_03878b46-0464-41d0-b574-a453bdb651f9_d046e481-b2eb-4805-b5f6-c267fe7fdfa6.png",
@@ -395,6 +427,10 @@
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\shop_11.jpg",
       "PackagePath": "staticwebassets\\img\\shop_11.jpg"
+    },
+    {
+      "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\img\\z4511080826289_0a9020da4ae00028767a25c2d1ac8a81_ecb74afc-17cb-4de3-a66e-22952513611f.jpg",
+      "PackagePath": "staticwebassets\\img\\z4511080826289_0a9020da4ae00028767a25c2d1ac8a81_ecb74afc-17cb-4de3-a66e-22952513611f.jpg"
     },
     {
       "Id": "D:\\C#_project\\ProjectByLong4\\LongShop3\\wwwroot\\js\\Login.js",
