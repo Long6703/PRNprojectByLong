@@ -22,5 +22,10 @@ namespace LongShop3.Services
         {
             return _orderRepo.getProductinfor(commonId);
         }
+
+        public List<OrderDetail> GetOrderDetails (int ordeid)
+        {
+            return _orderRepo.getorderdetailRepo(ordeid);
+        }
     }
 }

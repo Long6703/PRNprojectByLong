@@ -1,5 +1,7 @@
 ﻿using LongShop3.Models;
 using LongShop3.Repositories.IRepo;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace LongShop3.Repositories
 {
@@ -44,6 +46,29 @@ namespace LongShop3.Repositories
                                 Address = a
                             };
                 return query.ToList();
+            }
+        }
+
+        public List<OrderDetail> getorderdetailRepo(int ordeid)
+        {
+            using (var context = new SHOPLONG5Context())
+            {
+                var orderDetailsWithInfo = context.OrderDetails
+                    .Where(x => x.Orderid == ordeid)
+                    .Join(
+                        context.SizeColorStocks.Include(scs => scs.Color).Include(scs => scs.Size).Include(scs => scs.ProductDetail),
+                        od => od.CommonId,
+                        scs => scs.CommonId,
+                        (od, scs) => new
+                        {
+                            OrderDetail = od,
+                            SizeColorStock = scs
+                        })
+                    .ToList();
+
+                var orderDetails = orderDetailsWithInfo.Select(x => x.OrderDetail).ToList();
+
+                return orderDetails;
             }
         }
     }

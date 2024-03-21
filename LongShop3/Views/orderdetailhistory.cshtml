@@ -3,7 +3,8 @@
 *@
 @{
     @using LongShop3.Models
-    @model List<Order>
+    @model List<OrderDetail>
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -17,28 +18,29 @@
 <body>
     @Html.Partial("~/Views/Navbar.cshtml")
     <div class="container mt-5">
-        <h2 class="mb-4">Order History</h2>
+        <h2 class="mb-4">Order Detail History</h2>
+        <h5>Shiping : $10</h5>
         <table style="margin-bottom:300px" class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">#Order ID</th>
-                    <th scope="col">Total Price</th>
-                    <th scope="col">Order Date</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Address Shipping</th>
-                    <th>More infor</th>
+                    <th scope="col">#OrderDetail ID</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Color</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total Unit price</th>
                 </tr>
             </thead>
             <tbody id="orderHistoryBody">
-                @foreach(var o in Model)
+                @foreach (var o in Model)
                 {
                     <tr>
-                        <td scope="col">@o.Orderid</td>
-                        <td scope="col">@o.TotalPrice</td>
-                        <td scope="col">@o.OrderDate</td>
-                        <td scope="col">@o.StatusOrder.ToUpper()</td>
-                        <td scope="col">@o.Address.AddressName</td>
-                        <td><a href="orderdetailhistory?orderid=@o.Orderid">Detail</a></td>
+                        <td scope="col">@o.OrderdetailId</td>
+                        <td scope="col">@o.Common.ProductDetail.ProductName</td>
+                        <td scope="col">@o.Common.Color.ColorName</td>
+                        <td scope="col">@o.Common.Size.SizeName</td>
+                        <td scope="col">@o.Amount</td>
+                        <td scope="col">@((double)o.Amount * o.Common.ProductDetail.Price)</td>
                     </tr>
                 }
             </tbody>

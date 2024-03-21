@@ -122,5 +122,17 @@ namespace LongShop3.Controllers
             List<Address> listaddress = sHOPLONG5Context.Addresses.ToList();
             return View("~/Views/orderhistory.cshtml", listorder);
         }
+
+        [Route("/orderdetailhistory")]
+
+        public IActionResult OrderHistory(int orderid)
+        {
+            List<OrderDetail> orderDetails = _orderService.GetOrderDetails(orderid);
+            foreach (var orderDetail in orderDetails)
+            {
+                Console.WriteLine(orderDetail.Common.ProductDetail.ProductName);
+            }
+            return View("~/Views/orderdetailhistory.cshtml", orderDetails);
+        }
     }
 }
