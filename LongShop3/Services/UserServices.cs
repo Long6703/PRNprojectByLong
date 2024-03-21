@@ -18,6 +18,11 @@ namespace LongShop3.Services
             
         }
 
+        public List<User> getAllUserDetailForAdmin(string name, int role, int offset, int count)
+        {
+            return _urepo.GetAllUserDetailForAdminRepo(name, role, offset, count);
+        }
+
         public List<Group> getRole(string username)
         {
             return _urepo.getRoleRepo(username);
@@ -27,6 +32,11 @@ namespace LongShop3.Services
         {
             var user = _urepo.GetUser(username, pass);
             return user;
+        }
+
+        public int NumberOfAllUserDetail(string name, int role)
+        {
+            return _urepo.NumberOfAllUserDetailRepo(name, role);
         }
 
         public bool SignUp(User user)

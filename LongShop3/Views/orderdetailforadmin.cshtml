@@ -3,7 +3,8 @@
 *@
 @{
     @using LongShop3.Models
-    @model List<Order>
+    @model List<OrderDetail>
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -26,83 +27,7 @@
     <!-- Custom styles for this template-->
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet">
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            color:black;
-        }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px auto;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: darkblue;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            background-color: #ddd;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-        }
-
-            .pagination a {
-                color: black;
-                float: left;
-                padding: 8px 16px;
-                text-decoration: none;
-                transition: background-color .3s;
-            }
-
-                .pagination a.active {
-                    background-color: #04AA6D;
-                    color: white;
-                    border-radius: 5px;
-                }
-
-                .pagination a:hover:not(.active) {
-                    background-color: #ddd;
-                }
-
-                .pagination a:first-child {
-                    border-top-left-radius: 5px;
-                    border-bottom-left-radius: 5px;
-                }
-
-                .pagination a:last-child {
-                    border-top-right-radius: 5px;
-                    border-bottom-right-radius: 5px;
-                }
-
-        #search-container {
-            margin-bottom: 20px;
-        }
-
-        #search-input {
-            padding: 8px;
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-    </style>
 
 </head>
 
@@ -140,7 +65,6 @@
             <!--<div class="sidebar-heading">
                 Interface
             </div>-->
-
             <!-- Nav Item - Pages Collapse Menu -->
             <!--<li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -156,7 +80,6 @@
                     </div>
                 </div>
             </li>-->
-
             <!-- Nav Item - Utilities Collapse Menu -->
             <!--<li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -175,7 +98,6 @@
                     </div>
                 </div>
             </li>-->
-
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -193,7 +115,7 @@
                 </a>
                 <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
                      data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
+                    <div style="color:black" class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="manageproduct">Manage Product</a>
                         <a class="collapse-item" href="managebrands">Manage Brands</a>
@@ -209,9 +131,7 @@
             </li>
 
             <!-- Nav Item - Charts -->
-
             <!-- Nav Item - Tables -->
-
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -257,46 +177,33 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Manage Order</h1>
-                    <form action="manageorder" id="search-form">
-                        <div id="search-container">
-                            <input type="text" id="search-input" name="name" placeholder="Search by name..." value="@ViewBag.name">
-                        </div>
-                        <button id="role-search" type="submit">Search</button>
-                    </form>
-                    <table>
-                        <thead>
+                    <h1 class="h3 mb-4 text-gray-800">Admin Name :  + Manage Order</h1>
+
+                    <table style="margin-bottom:300px; color:black" class="table">
+                        <thead style="background-color:#4e73df; color:white">
                             <tr>
-                                <th scope="col">#Order ID</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Total Price</th>
-                                <th scope="col">Order Date</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Address Shipping</th>
-                                <th>More infor</th>
+                                <th scope="col">#OrderDetail ID</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Color</th>
+                                <th scope="col">Size</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total Unit price</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="orderHistoryBody">
                             @foreach (var o in Model)
                             {
                                 <tr>
-                                    <td scope="col">@o.Orderid</td>
-                                    <td scope="col">@o.Username</td>
-                                    <td scope="col">@o.TotalPrice</td>
-                                    <td scope="col">@o.OrderDate</td>
-                                    <td scope="col">@o.StatusOrder.ToUpper()</td>
-                                    <td scope="col">@o.Address.AddressName</td>
-                                    <td><a href="orderdetailforadmin?orderid=@o.Orderid">Detail</a></td>
+                                    <td scope="col">@o.OrderdetailId</td>
+                                    <td scope="col">@o.Common.ProductDetail.ProductName</td>
+                                    <td scope="col">@o.Common.Color.ColorName</td>
+                                    <td scope="col">@o.Common.Size.SizeName</td>
+                                    <td scope="col">@o.Amount</td>
+                                    <td scope="col">@((double)o.Amount * o.Common.ProductDetail.Price)</td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-                    <div class="pagination">
-                        @for (int i = 1; i <= ViewBag.totalpage; i++)
-                        {
-                            <a class="@(i == ViewBag.currentpage ? "active" : "")" href="manageorder?name=@ViewBag.name&page=@i">@i</a>
-                        }
-                    </div>
                 </div>
                 <!-- /.container-fluid -->
 
